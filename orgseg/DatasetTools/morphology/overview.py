@@ -260,6 +260,9 @@ def generate_meshgrid_img_cropped(input_folder, keep_open = True):
     print('### Generating recap meshgrid image at',input_folder)
     _, cond = os.path.split(input_folder)
     segment_folder = os.path.join(input_folder,'result_segmentation')
+
+    file_extension = '_morpho_params.json'
+    fname = os.path.join(segment_folder,cond+file_extension)
     if not os.path.exists(fname):
         props = computemorphology.compute_morphological_info(input_folder)
         ioMorph.save_morpho_params( segment_folder, cond, props )
