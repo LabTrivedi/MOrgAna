@@ -35,9 +35,9 @@ from orgseg.ImageTools.objectsparsing import objectsparser
 warnings.filterwarnings("ignore")
 
 
-class gastrSegmentApp(QWidget):
+class orgSegmentApp(QWidget):
     def __init__(self, parent=None):
-        super(gastrSegmentApp, self).__init__(parent)
+        super(orgSegmentApp, self).__init__(parent)
 
         self.modelFolder = '-'
         self.imageFolder = '-'

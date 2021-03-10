@@ -5,16 +5,16 @@ Created on Wed Apr  3 10:57:50 2019
 
 @author: ngritti
 """
-import sys, os
-filepath = os.path.dirname(os.path.abspath(__file__))
-# sys.path.insert(0,os.path.join(filepath))
+import sys
 import PyQt5.QtWidgets
-import orgseg.GUIs.mainwindow
+from orgseg.GUIs.mainwindow import orgSegmentApp
+# filepath = os.path.dirname(os.path.abspath(__file__))
+# sys.path.insert(0,os.path.join(filepath))
 
 if __name__ == '__main__':
     def run():
         app = PyQt5.QtWidgets.QApplication(sys.argv)
-        gallery = orgseg.GUIs.mainwindow.gastrSegmentApp()
+        gallery = orgSegmentApp()
         gallery.show()
         sys.exit(app.exec_())
 
