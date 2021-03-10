@@ -16,14 +16,14 @@ import os, tqdm
 from skimage.io import imread, imsave
 import numpy as np
 
-import sys
-sys.path.append(os.path.join('..'))
-import DatasetTools.io
-import DatasetTools.segmentation.io
-import DatasetTools.morphology.computemorphology
-import DatasetTools.morphology.io
-import ImageTools.segmentation.segment
-import GUIs.manualmask
+# import sys
+# sys.path.append(os.path.join('..'))
+from orgseg.DatasetTools import io as ioDT
+from orgseg.DatasetTools.segmentation import io as ioSeg
+from orgseg.DatasetTools.morphology import io as ioMorph
+from orgseg.DatasetTools.morphology import computemorphology, overview
+from orgseg.ImageTools.segmentation import segment
+from orgseg.GUIs import manualmask
 
 ###############################################################################
 
@@ -46,7 +46,7 @@ if __name__ == '__main__':
         result_folder = os.path.join(image_folder, 'result_segmentation')
         folder, cond = os.path.split(image_folder)
 
-        flist_in, chosen_masks, down_shapes, thinnings, smoothings = DatasetTools.segmentation.io.load_segmentation_params( result_folder )
+        flist_in, chosen_masks, down_shapes, thinnings, smoothings = ioSeg.load_segmentation_params( result_folder )
         flist_in = [os.path.join(image_folder, f) for f in flist_in]
         n_imgs = len(flist_in)
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
         ### clean masks previously generated
         ### only use this part if you want to rewrite final masks!
 
-#        flist_to_remove = DatasetTools.io.get_image_list(result_folder, '_finalMask', 'include')
+#        flist_to_remove = ioDT.get_image_list(result_folder, '_finalMask', 'include')
 #        for f in flist_to_remove:
 #            os.remove(f)
 #        morpho_file = os.path.join(result_folder,cond+'_morpho_params.json')
@@ -75,7 +75,7 @@ if __name__ == '__main__':
                 
                 if chosen_masks[i] == 'w':
                     _rawmask = imread( os.path.join(result_folder, filename+'_watershed'+extension) )
-                    mask = ImageTools.segmentation.segment.smooth_mask( 
+                    mask = segment.smooth_mask( 
                                                 _rawmask, 
                                                 mode='watershed',
                                                 down_shape=down_shapes[i], 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
                         # if mask is zero, try smoothing less
                         smoothings[i] -= 2
                         print('Trying with: smoothing', smoothings[i])
-                        mask = ImageTools.segmentation.segment.smooth_mask( 
+                        mask = segment.smooth_mask( 
                                                     _rawmask, 
                                                     mode='watershed',
                                                     down_shape=down_shapes[i], 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                     
                 elif chosen_masks[i] == 'c':
                     _rawmask = imread( os.path.join(result_folder, filename+'_classifier'+extension) )
-                    mask = ImageTools.segmentation.segment.smooth_mask( 
+                    mask = segment.smooth_mask( 
                                                 _rawmask, 
                                                 mode='classifier',
                                                 down_shape=down_shapes[i], 
@@ -108,7 +108,7 @@ if __name__ == '__main__':
                         smoothings[i] -= 2
                         thinnings[i] -= 1
                         print('Trying with: smoothing', smoothings[i],' thinnings', thinnings[i])
-                        mask = ImageTools.segmentation.segment.smooth_mask( 
+                        mask = segment.smooth_mask( 
                                                     _rawmask, 
                                                     mode='classifier',
                                                     down_shape=down_shapes[i], 
@@ -118,13 +118,13 @@ if __name__ == '__main__':
                     
                 elif chosen_masks[i] == 'm':
                     if not os.path.exists(os.path.join(result_folder,filename+'_manual'+extension)):
-                        m = GUIs.manualmask.makeManualMask(flist_in[i])
+                        m = manualmask.makeManualMask(flist_in[i])
                         m.show()
                         m.exec()
                     else:
                         print('A previously generated manual mask exists!')
                     _rawmask = imread( os.path.join(result_folder,filename+'_manual'+extension) )
-                    mask = ImageTools.segmentation.segment.smooth_mask( 
+                    mask = segment.smooth_mask( 
                                                     _rawmask, 
                                                     mode='manual',
                                                     down_shape=down_shapes[i], 
@@ -137,7 +137,7 @@ if __name__ == '__main__':
                         print('Trying with: smoothing', smoothings[i])
                         # if mask is zero, try smoothing less
                         smoothings[i] -= 2
-                        mask = ImageTools.segmentation.segment.smooth_mask( 
+                        mask = segment.smooth_mask( 
                                                         _rawmask, 
                                                         mode='manual',
                                                         down_shape=down_shapes[i], 
@@ -150,7 +150,7 @@ if __name__ == '__main__':
                     print('Warning, no trainingset!','The method selected didn\'t generate a valid mask. Please input the mask manually.')
     
                     chosen_masks[i] = 'm'
-                    DatasetTools.segmentation.io.save_segmentation_params(  
+                    ioSeg.save_segmentation_params(  
                                         result_folder, 
                                         [os.path.split(fin)[-1] for fin in flist_in],
                                         chosen_masks,
@@ -159,13 +159,13 @@ if __name__ == '__main__':
                                         smoothings 
                                         )
                     if not os.path.exists(os.path.join(result_folder,filename+'_manual'+extension)):
-                        m = GUIs.manualmask.makeManualMask(flist_in[i])
+                        m = manualmask.makeManualMask(flist_in[i])
                         m.show()
                         m.exec()
                     else:
                         print('A previously generated manual mask exists!')
                     _rawmask = imread( os.path.join(result_folder,filename+'_manual'+extension) )
-                    mask = ImageTools.segmentation.segment.smooth_mask( 
+                    mask = segment.smooth_mask( 
                                     _rawmask, 
                                     mode='manual',
                                     down_shape=down_shapes[i], 
@@ -173,7 +173,7 @@ if __name__ == '__main__':
                                     )
     
                 ### save segmentation parameters
-                DatasetTools.segmentation.io.save_segmentation_params(  
+                ioSeg.save_segmentation_params(  
                                 result_folder, 
                                 [os.path.split(fin)[-1] for fin in flist_in],
                                 chosen_masks,
@@ -194,13 +194,13 @@ if __name__ == '__main__':
         morpho_file_name = os.path.join(result_folder,cond+'_morpho_params.json')
         
         if not os.path.exists(morpho_file_name):
-            props = DatasetTools.morphology.computemorphology.compute_morphological_info(image_folder, False)
-            DatasetTools.morphology.io.save_morpho_params(result_folder, cond, props)
+            props = computemorphology.compute_morphological_info(image_folder, False)
+            ioMorph.save_morpho_params(result_folder, cond, props)
 
         #######################################################################
         ### generate overview of masks (optional)
 
-#        DatasetTools.morphology.overview.generate_overview_finalMask(
+#        overview.generate_overview_finalMask(
 #                                gastr_folder, 
 #                                chosen=[c!='i' for c in chosen_masks], 
 #                                saveFig=True, downshape=3

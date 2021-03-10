@@ -23,16 +23,16 @@ import os, glob, tqdm
 from skimage.io import imread, imsave
 import numpy as np
 
-import sys
-sys.path.append(os.path.join('..'))
-import DatasetTools.io
-import DatasetTools.morphology.overview
-import DatasetTools.morphology.computemorphology
-import DatasetTools.morphology.io
-import DatasetTools.straightmorphology.computestraightmorphology
-import DatasetTools.straightmorphology.io
-import DatasetTools.fluorescence.computefluorescence
-import DatasetTools.fluorescence.io
+# import sys
+# sys.path.append(os.path.join('..'))
+# from orgseg.DatasetTools import io as ioDT
+from orgseg.DatasetTools.morphology import overview
+from orgseg.DatasetTools.morphology import computemorphology
+from orgseg.DatasetTools.morphology import io as ioMorph
+from orgseg.DatasetTools.straightmorphology import computestraightmorphology
+from orgseg.DatasetTools.straightmorphology import io as ioStr
+from orgseg.DatasetTools.fluorescence import computefluorescence
+from orgseg.DatasetTools.fluorescence import io as ioFluo
 
 ###############################################################################
 
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         fname = os.path.join(image_folder,'result_segmentation', cond + file)
         text = text + '\n\t'+fname
         if not os.path.exists(os.path.join(result_folder,image_folder+file)):
-            DatasetTools.morphology.overview.createCompositeOverview(image_folder, keep_open=False)        
+            overview.createCompositeOverview(image_folder, keep_open=False)        
         print(text)
                 
         file = '_meshgrid_recap.png'
@@ -73,13 +73,13 @@ if __name__ == '__main__':
         fname = os.path.join(image_folder,'result_segmentation', cond + file)
         text = text + '\n\t'+fname
         if not os.path.exists(os.path.join(result_folder,image_folder+file)):
-            DatasetTools.morphology.overview.createMeshgridOverview(image_folder, keep_open=False)
+            overview.createMeshgridOverview(image_folder, keep_open=False)
         print(text)
 
         #######################################################################
         ### compute morphology if not computed
-        compute_morphological_info = DatasetTools.morphology.computemorphology.compute_morphological_info
-        save_morphological_info = DatasetTools.morphology.io.save_morpho_params
+        compute_morphological_info = computemorphology.compute_morphological_info
+        save_morphological_info = ioMorph.save_morpho_params
 
         file_extension = '_morpho_params.json'
         fname = os.path.join(result_folder,cond+file_extension)
@@ -91,8 +91,8 @@ if __name__ == '__main__':
         #######################################################################
         ### compute straight morphology if not computed
         
-        compute_morphological_info = DatasetTools.straightmorphology.computestraightmorphology.compute_straight_morphological_info
-        save_morphological_info = DatasetTools.straightmorphology.io.save_straight_morpho_params
+        compute_morphological_info = computestraightmorphology.compute_straight_morphological_info
+        save_morphological_info = ioStr.save_straight_morpho_params
         
         file_extension = '_morpho_straight_params.json'
         fname = os.path.join(result_folder,cond+file_extension)
@@ -110,8 +110,8 @@ if __name__ == '__main__':
         fname = os.path.join(result_folder,cond+file_extension)
 
         if not os.path.exists(fname):
-            data = DatasetTools.fluorescence.computefluorescence.compute_fluorescence_info( image_folder )
-            DatasetTools.fluorescence.io.save_fluo_info( result_folder, cond, data )
+            data = computefluorescence.compute_fluorescence_info( image_folder )
+            ioFluo.save_fluo_info( result_folder, cond, data )
         
         print("Computed all fluorescence information")
         

@@ -11,11 +11,11 @@ from skimage.io import imread
 import numpy as np
 import time
 
-import sys
-sys.path.append(os.path.join('..'))
-import DatasetTools.io
-import MLModel.io
-import MLModel.train
+# import sys
+# sys.path.append(os.path.join('..'))
+from orgseg.DatasetTools import io as ioDT
+from orgseg.MLModel import io as ioML
+from orgseg.MLModel import train
 
 ###############################################################################
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         training_folder = os.path.join(model_folder, 'trainingset')
 
         ### load images
-        flist_in = DatasetTools.io.get_image_list(
+        flist_in = ioDT.get_image_list(
                                                   training_folder, 
                                                   string_filter='_GT', 
                                                   mode_filter='exclude'
@@ -59,7 +59,7 @@ if __name__ == '__main__':
             img_train.append( img[0] )
 
         ## load ground truth
-        flist_gt = DatasetTools.io.get_image_list(
+        flist_gt = ioDT.get_image_list(
                                                 training_folder, 
                                                 string_filter='_GT', 
                                                 mode_filter='include'
@@ -75,7 +75,7 @@ if __name__ == '__main__':
         ### compute features and generate training set and weights
 
         print('##### Generating training set...')
-        X, Y, w, scaler = MLModel.train.generate_training_set( 
+        X, Y, w, scaler = train.generate_training_set( 
                                         img_train, 
                                         [g.astype(np.uint8) for g in gt_train], 
                                         sigmas = sigmas,
@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
         print('##### Training model...')
         start = time.time()
-        classifier = MLModel.train.train_classifier( X, Y, w )
+        classifier = train.train_classifier( X, Y, w )
         print('Models trained in %.3f seconds.'%(time.time()-start))
         print('classes_: ', classifier.classes_)
         print('coef_: ', classifier.coef_)
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         ###################################################################
         ### Save the model
 
-        MLModel.io.save_model( 
+        ioML.save_model( 
                         model_folder,
                         classifier,
                         scaler,

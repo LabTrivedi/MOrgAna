@@ -7,11 +7,11 @@ Created on Fri Apr 24 16:46:26 2020
 
 import os
 
-import sys
-sys.path.append(os.path.join('..'))
-import GUIs.inspection
-import DatasetTools.segmentation.io
-import DatasetTools.io
+# import sys
+# sys.path.append(os.path.join('..'))
+from orgseg.GUIs import inspection
+from orgseg.DatasetTools.segmentation import io as ioSeg
+from orgseg.DatasetTools import io as ioDT
 
 ###############################################################################
 
@@ -31,10 +31,10 @@ if __name__ == '__main__':
     
         print('\n-------------'+image_folder+'------------\n')
 
-        flist_in = DatasetTools.io.get_image_list(image_folder)
+        flist_in = ioDT.get_image_list(image_folder)
         n_imgs = len( flist_in )
         if os.path.exists(os.path.join(image_folder,'result_segmentation','segmentation_params.csv')):
-            flist_in, chosen_masks, down_shapes, thinnings, smoothings = DatasetTools.segmentation.io.load_segmentation_params( os.path.join(image_folder,'result_segmentation') )
+            flist_in, chosen_masks, down_shapes, thinnings, smoothings = ioSeg.load_segmentation_params( os.path.join(image_folder,'result_segmentation') )
             flist_in = [os.path.join(image_folder,i) for i in flist_in]
         else:
             chosen_masks = ['w' for i in range(n_imgs)]
@@ -43,7 +43,7 @@ if __name__ == '__main__':
             smoothings = [25 for i in range(n_imgs)]
 
         save_folder = os.path.join(image_folder, 'result_segmentation')
-        DatasetTools.segmentation.io.save_segmentation_params(  save_folder, 
+        ioSeg.save_segmentation_params(  save_folder, 
                                                         [os.path.split(fin)[-1] for fin in flist_in],
                                                         chosen_masks,
                                                         down_shapes, 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
                                                         smoothings )
 
         
-        w = GUIs.inspection.inspectionWindow_20max(
+        w = inspection.inspectionWindow_20max(
                 image_folder, 
                 parent=None, 
                 start=0, 

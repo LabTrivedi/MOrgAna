@@ -8,10 +8,10 @@ Created on Fri Apr 24 12:26:12 2020
 import tqdm
 import os
 
-import sys
-sys.path.append(os.path.join('..'))
-import GUIs.manualmask
-import DatasetTools.io
+# import sys
+# sys.path.append(os.path.join('..'))
+from orgseg.GUIs.manualmask import makeManualMask
+from orgseg.DatasetTools import io
 
 
 ###############################################################################
@@ -39,9 +39,9 @@ def create_GT_mask(model_folder):
         return
 
     ### load trainingset images and previously generated ground truth    
-    flist_in = DatasetTools.io.get_image_list(trainingset_folder, string_filter='_GT', mode_filter='exclude')
+    flist_in = io.get_image_list(trainingset_folder, string_filter='_GT', mode_filter='exclude')
     flist_in.sort()
-    flist_gt = DatasetTools.io.get_image_list(trainingset_folder, string_filter='_GT', mode_filter='include')
+    flist_gt = io.get_image_list(trainingset_folder, string_filter='_GT', mode_filter='include')
     flist_gt.sort()
 
     ### if no trainingset images in the folder, skip this gastruloid
@@ -58,7 +58,7 @@ def create_GT_mask(model_folder):
             mask_name = fn+'_GT'+ext
 
             if not os.path.exists(mask_name):
-                m = GUIs.manualmask.makeManualMask(f,subfolder='',fn=fn+'_GT'+ext,wsize = (2000,2000))
+                m = makeManualMask(f,subfolder='',fn=fn+'_GT'+ext,wsize = (2000,2000))
                 m.show()
                 m.exec()
 

@@ -8,10 +8,10 @@ Created on Thu Apr 23 11:36:41 2020
 import sys, time, tqdm, copy, os
 sys.path.append(os.path.join('..'))
 
-import ImageTools.morphology.meshgrid
-import DatasetTools.straightmorphology.io
-import DatasetTools.morphology.io
-import DatasetTools.fluorescence.io
+from orgseg.ImageTools.morphology import meshgrid
+from orgseg.DatasetTools.straightmorphology import io as ioStr
+from orgseg.DatasetTools.morphology import io as ioMorph
+from orgseg.DatasetTools.fluorescence import io as ioFluo
 
 import pandas as pd
 import tqdm
@@ -69,12 +69,12 @@ if __name__ == '__main__':
 #            for i in tqdm.tqdm(range(10)):
 #                time.sleep(60)
                 
-            df_morpho = DatasetTools.morphology.io.load_morpho_params( save_folder, gastr )
-            df_straight = DatasetTools.straightmorphology.io.load_straight_morpho_params(
+            df_morpho = ioMorph.load_morpho_params( save_folder, gastr )
+            df_straight = ioStr.load_straight_morpho_params(
                                                                             save_folder, 
                                                                             gastr
                                                                             )
-            df_fluo = DatasetTools.fluorescence.io.load_fluo_info( save_folder, gastr )
+            df_fluo = ioFluo.load_fluo_info( save_folder, gastr )
 
             N_img = len(df_morpho.input_file)
             
@@ -112,17 +112,17 @@ if __name__ == '__main__':
                 tangent = df_morpho.tangent[i]
                 midline = df_morpho.midline[i]
                 width = df_morpho.meshgrid_width[i]
-                meshgrid = df_morpho.meshgrid[i]
-                if meshgrid == None:
-                    meshgrid = ImageTools.morphology.meshgrid.compute_meshgrid(
+                mesh = df_morpho.meshgrid[i]
+                if mesh == None:
+                    mesh = meshgrid.compute_meshgrid(
                                                                                 midline,
                                                                                 tangent,
                                                                                 width
                                                                                 )
             
                 # straighten the mask and the image
-                mesh_shape = meshgrid.shape
-                coords_flat = np.reshape( meshgrid, (mesh_shape[0]*mesh_shape[1],2) ).T
+                mesh_shape = mesh.shape
+                coords_flat = np.reshape( mesh, (mesh_shape[0]*mesh_shape[1],2) ).T
             
                 ma_straight = map_coordinates(mask,
                                               coords_flat,

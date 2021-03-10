@@ -12,12 +12,12 @@ import scipy.ndimage as ndi
 import multiprocessing
 from itertools import repeat
 
-import sys
-sys.path.append(os.path.join('..'))
-import DatasetTools.io
-import DatasetTools.multiprocessing.istarmap
-import MLModel.io
-import MLModel.predict
+# import sys
+# sys.path.append(os.path.join('..'))
+from orgseg.DatasetTools import io as ioDT
+import orgseg.DatasetTools.multiprocessing.istarmap
+from orgseg.MLModel import io as ioML
+from orgseg.MLModel import predict
 
 ###############################################################################
 
@@ -56,7 +56,7 @@ def predict_single_image(f_in, classifier, scaler, params):
     if not os.path.exists(new_name_classifier):
         # print('Predicting image...')
 
-        pred, prob = MLModel.predict.predict_image( 
+        pred, prob = predict.predict_image( 
                             img,
                             classifier,
                             scaler,
@@ -76,7 +76,7 @@ def predict_single_image(f_in, classifier, scaler, params):
 
     if not os.path.exists(new_name_watershed):
         # perform watershed
-        mask_final = MLModel.predict.make_watershed(
+        mask_final = predict.make_watershed(
                             mask_pred,
                             edge_prob,
                             new_shape_scale = params['down_shape'] 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         training_folder = os.path.join(model_folder, 'trainingset')
 
         print('##### Loading classifier model and parameters...')
-        classifier, scaler, params = MLModel.io.load_model( model_folder )
+        classifier, scaler, params = ioML.load_model( model_folder )
         print('##### Model loaded!')
               
         #######################################################################
@@ -110,7 +110,7 @@ if __name__ == '__main__':
         if not os.path.exists(result_folder):
             os.mkdir(result_folder)
 
-        flist_in = DatasetTools.io.get_image_list(image_folder)
+        flist_in = ioDT.get_image_list(image_folder)
         flist_in.sort()        
         N_img = len(flist_in)
         
