@@ -1,0 +1,96 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unknown </title></head><body>
+<h1 id="gastrsegment">gastrSegment</h1>
+<p>Welcome to :sparkles: Nicola's amazing software :sparkles: to segment and analyse 2D multi-channel images of organoids.</p>
+<p>Before use, please download this github repository :smirk_cat::smirk_cat::smirk_cat:
+Optional: To use deep machine learning in generation of masks, please install the correct version of TensorFlow and cuDNN for your system:
+https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installwindows</p>
+<h2 id="using-the-software">Using the software</h2>
+<p>This software is able to A) generate binary masks of organoids based on their bright-field images and with this mask, extract morphological information, generate a midline and a meshgrid. B) Provide analysis of fluorescence signals along the generated midline and enable quick and easy visual comparisons between conditions.</p>
+<p>To run the software, set file directory to <code>/gastrSegment</code> in terminal (MacOS) or command prompt(windows) and run <code>python -m orgseg</code></p>
+<p><img src="front_page-1.png" alt="front_page" width="350"/></p>
+<h3 id="a-generate-or-import-masks-tab">A) Generate or Import Masks Tab</h3>
+<h4 id="creating-binary-masks">Creating binary masks</h4>
+<ol>
+<li>
+<p>Manually create a <code>model</code> folder that contains a <code>trainingset</code> sub-folder. Select a few representative images (~5% of all images) and copy them into this sub-folder. If binary masks of this training set have already been created, place them in the same folder and name them as <code>..._GT.tif</code>. E.g. <code>20190509_01B_dmso.tif</code> and <code>20190509_01B_dmso_GT.tif</code>.</p>
+</li>
+<li>
+<p>Run the segmentation app. Click <code>Specify model folder</code> and select the <code>model</code> folder created. If binary masks are missing, please manually annotate for each image by clicking on the image in the pop up window to create a boundary around your object of interest or right click on red dots to remove selection. </p>
+</li>
+</ol>
+<p><img src="binary_mask-1.png" alt="binary_mask" width="400"/></p>
+<ol>
+<li>
+<p>Select <code>Use Multi Layer Perceptrons</code> if Tensorflow and CUDA have been successfully installed and if you would like to use deep learning to generate additional binary masks. </p>
+<p>Users can choose to adjust the following parameters of the model by clicking <code>Show/Hide params</code>
+<em> Sigmas: length scales (in pixels) used to generate the gaussian blurs of the input image
+</em> Downscaling: number of pixels used to resize the input image. This is mainly done to reduce  computation time, and a value of 500 is found to be enough in most applications.
+<em> Edge size: number of pixels used on the border of the mask to generate the edge of the organoid.
+</em> Pixel% extraction: percentage of pixels of the input image to be considered. 0: no pixels, 1: all pixels
+<em> Extraction bias: percentage of pixels extracted from the bright region of the mask. This parameter is useful when inputted gastruloids are particularly small and there is a huge bias in extracting background pixels.
+</em> Features: 'ilastik' or 'daisy'. In addition to the ilastik features (gaussian blur, laplacian of gaussian, difference of gaussian and gradient), daisy will compute many texture features from the inptu image. This gives more features to train on, but will slow down the training and prediction of new masks.</p>
+</li>
+<li>
+<p>Once done, hit the <code>Train model</code> button. This may take some time :coffee:. Once completed, the message <code>##### Model saved!</code> will be seen on the terminal(MacOS) or command prompt(windows). If a model has previously been generated, select the model folder and the user can skip step 3 &amp; 4 and jump to step 5. For models trained with Multi Layer Perceptrons, tick the option before selection of model folder.</p>
+</li>
+<li>
+<p>To generate binary masks of new images, select the folder containing images in <code>Specify image folder</code> and click <code>Generate masks</code>. Once completed, the message <code>All images done!</code> will be displayed on the terminal(MacOS) or command prompt(windows). If you would like an overview of all masks generated, click on <code>Save overview image of masks</code> and save the pop-up image.</p>
+</li>
+<li>
+<p>Click on <code>Inspect masks</code>. This will generate a overview of binary masks overlayed with their respective brightfield images. The mask generated with the watershed algorithm is shown in blue while the red mask is generated with the classifier algorithm.</p>
+</li>
+</ol>
+<p><img src="manual_selection_mask-1.png" alt="manual_selection_mask" width="800"/></p>
+<ol>
+<li>
+<p>The other panel will allow the user to chose, for every image, the final mask type: 'ignore' (do not include selected image and mask), 'classifier' (red), 'watershed' (blue), 'manual' (manually create mask). Clicking <code>Show/Hide more parameters</code> will enable the user to change parameters such as downsampling, thinning and smoothing used in the generation of the final mask. Optional: select <code>Compute full meshgrid</code> to generate a meshgrid for straightening of organoid for later quantification. If disabled, meshgrid will automatically be generated later if required.</p>
+</li>
+<li>
+<p>Next, <code>Compute all masks</code> will generate the final masks for every input image and save them into the <code>result_segmentation</code> subfolder. If 'manual' is selected, the user will be prompted to generate the manual mask on a separate window. As a rule of thumb, the classifier algorithm works most of the times. </p>
+</li>
+</ol>
+<h4 id="import-external-masks">Import external masks</h4>
+<ol>
+<li>If binary masks of all images have already been generated, select <code>Import external masks</code>. This will reveal a new page. This feature allows import of images with multiple objects of interest.</li>
+</ol>
+<p><img src="import_external_masks-1.png" alt="import_external_masks" width="350"/></p>
+<ol>
+<li>
+<p>Specify image and mask folder with the <code>Specify image folder</code> and <code>Specify mask folder</code> buttons. Masks should be labeled as name of its respective image + file identifier. E.g. if the identifier is <code>_GT</code>: Image <code>20190509_01B_dmso.tif</code> and its mask <code>20190509_01B_dmso_GT.tif</code>.</p>
+</li>
+<li>
+<p>Select <code>Include objects at border of images</code> if all partial images at edges of images are to be included. </p>
+</li>
+<li>
+<p><code>Import Masks and Images</code> will create a mask and a image for each object detected in imported images and masks.</p>
+</li>
+</ol>
+<h3 id="b-quantification">B) Quantification</h3>
+<p>Click on the Quantification tab to enable morphological and fluorescence quantification with previously generated masks.
+<img src="import_external_masks-2.png" alt="import_external_masks" width="350"/></p>
+<ol>
+<li/>
+</ol>
+<h2 id="supplementary-information">Supplementary information</h2>
+<p>All morphological properties of organoids are also computed and saved as a pickle file into the same subfolder as the final masks (<code>result_segmentation</code>)</p>
+<pre><code>These include:
+* 'input_file'
+* 'mask_file'
+* 'centroid'
+* 'slice'
+* 'area'
+* 'eccentricity' (perfect circle:0, elongated ellipse:~1)
+* 'major_axis_length'
+* 'minor_axis_length'
+* 'equivalent_diameter'
+* 'perimeter'
+* 'anchor_points_midline'
+* 'N_points_midline'
+* 'x_tup'
+* 'y_tup'
+* 'midline'
+* 'tangent'
+* 'meshgrid_width'
+* 'meshgrid'
+</code></pre>
+</body></html>
