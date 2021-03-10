@@ -116,7 +116,7 @@ class visualization_0d(QWidget):
         self.remakePlot()
 
         self.setWindowTitle(self.name)
-        QApplication.setStyle('Macintosh')
+        QApplication.setStyle('Fusion')
 
     def makeGroupSelectionBtns(self):
         group = QGroupBox("Groups to plot")

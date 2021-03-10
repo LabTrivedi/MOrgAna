@@ -95,7 +95,7 @@ class profileAP_condMode(QWidget):
         self.remakePlot()
 
         self.setWindowTitle('Channel')
-        QApplication.setStyle('Macintosh')
+        QApplication.setStyle('Fusion')
 
     def onCheckingXnormBtn(self):
         if self.XnormBtn.isChecked():

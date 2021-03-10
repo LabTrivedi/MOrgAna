@@ -85,7 +85,7 @@ class inspectionWindow_20max(QDialog):
         self.setLayout(self.layout)
 
         self.setWindowTitle('Organoids Segmentation App')
-        QApplication.setStyle('Macintosh')
+        QApplication.setStyle('Fusion')
 
     def createGroup1(self):
         self.group1 = QGroupBox("")

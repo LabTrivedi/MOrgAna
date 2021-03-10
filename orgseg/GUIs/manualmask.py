@@ -21,7 +21,7 @@ class makeManualMask(QDialog):
     def __init__(self, file_in,subfolder='result_segmentation',fn=None, parent=None, wsize = (1000,1000)):
         super(makeManualMask, self).__init__(parent)
         self.setWindowTitle('Manual mask: '+file_in)
-        QApplication.setStyle('Macintosh')
+        QApplication.setStyle('Fusion')
         self.setWindowFlag(Qt.WindowCloseButtonHint, False)
 
         self.file_in = file_in
