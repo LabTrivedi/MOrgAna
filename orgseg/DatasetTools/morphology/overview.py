@@ -239,7 +239,7 @@ def generate_composite_img_cropped(input_folder, downshape=1, keep_open=True):
     for a in ax.flatten():
         a.axis('off')
         
-    plt.show()
+    fig.show()
 
     print('### Saving image...')
     # save figure
@@ -312,7 +312,7 @@ def generate_meshgrid_img_cropped(input_folder, keep_open = True):
     for j in range(i+1,len(ax)):
         ax[j].remove()
 
-    plt.show()
+    fig.show()
         
     print('### Saving image...')
     # save figure
