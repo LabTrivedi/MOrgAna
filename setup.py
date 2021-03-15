@@ -7,7 +7,7 @@ import setuptools
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='orgseg',
+    name='MOrgAna',
     version="0.1.0",
     # author=__AUTHOR__,
     # author_email=__EMAIL__,
