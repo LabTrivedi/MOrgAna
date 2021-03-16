@@ -16,6 +16,7 @@ To download the software, run `pip install morgana` in terminal (MacOS) or comma
 </p>
 
 ### A) Generate or Import Masks Tab
+Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif.
 
 #### Creating binary masks
 
@@ -75,7 +76,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 
 1. Using the `Select new dataset` button, import all image folders previously generated or imported in the `Generate or Import Masks` tab into the preferred groups. Each group can refer to one condition or one timepoint. For groups spanning multiple timepoints, users may select the `Timelapse data` option. More groups can be created by clicking `Add New Group` at the top. If there is only one group, `Groups` can be disabled at the top after selection of dataset.
 
-2. After importing all selected image folders, there are options available below:
+2. After importing all selected image folders, there are several options available below:
 <p align="center">
 <img src="morgana/Examples/app_screenshots/extended_quantification_tab.png" alt="extended_quantification_tab" width="350"/>
 </p>
@@ -96,16 +97,19 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 	* `Use all parameters`: will display 10 graphs, each a quantification of the above parameters.
 	
 	Clicking `Visualize Morphological Parameter (s)` will display one or more of the following windows:
+
 <p align="center">
 <img src="morgana/Examples/app_screenshots/area.png" alt="area" width="350"/>
 </p>
-	In this window, you can edit the quantification of morphological parameters by selecting the type of normalization and background subtraction. Users can also edit the graph shown by changing Pixel size/Scaler, Dimensionality, Plot type and Colormap with the options of removing groups, addition of legend or removal or raw data points on the graph. To view changes, click on `Apply Settings` after making the desired changes to options shown. `Compute statistics` shows P-values obtained from T-test, with the option of saving the p-values in a excel sheet. Users can also choose to save all resulting quantification values with the `Save Data as xlsx` button at the bottom.
+
+	In this window, you can edit the quantification of morphological parameters by selecting the type of normalization and background subtraction. Users can also edit the graph shown by changing Pixel size/Scaler, Dimensionality, Plot type and Colormap with the options of removing groups, addition of legend or removal or raw data points on the graph. To view changes, click on `Apply Settings` after making the desired changes to options shown. `Compute statistics` shows P-values obtained from T-test, with the option of saving the p-values in a excel sheet. Users can also choose to save all resulting quantification values with the `Save Data as xlsx` button at the bottom. Square buttons at the top of the window can also be used to adjust the resulting graph with default options provided by matplotlib.
+
 
 * `Fluorescence quantification`: Quantification of fluorescence in the chosen channel with respect to space with the selection of Antero-Posterior profile, Left-Right profile, Radial profile, Angular profile or simply with the average fluorescence intensity. `Compute graph` will display one such panel shown below:
 <p align="center">
 <img src="morgana/Examples/app_screenshots/APprofile.png" alt="APprofile" width="350"/>
 </p>
-Users can choose to adjust method of quantification by changing Background subtraction type, Y axis normalization or selection of X axis normalization. If a spatial profile was chosen, the orientation of the profile can be signal-based. Users can similarly edit the colours of the graph with the Colormap, edit the X and Y axis labels, choose not to plot unwanted groups, include legends or remove raw data points from the graph shown. After altering the options, click on `Apply Settings` to view the changes.
+Users can choose to adjust method of quantification by changing Background subtraction type, Y axis normalization or selection of X axis normalization. If a spatial profile was chosen, the orientation of the profile can be signal-based. Users can similarly edit the colours of the graph with the Colormap, edit the X and Y axis labels, choose not to plot unwanted groups, include legends or remove raw data points from the graph shown. After altering the options, click on `Apply Settings` to view the changes. Default options of graphs by matplotib can also be changed with the square buttons at the top of the window.
 
 
 ## Supplementary information
