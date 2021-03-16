@@ -15,6 +15,8 @@ To download the software, run `pip install morgana` in terminal (MacOS) or comma
 	<img src="morgana/Examples/app_screenshots/front_page.png" alt="front_page" width="350"/>
 </p>
 
+For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb'.
+
 ### A) Generate or Import Masks Tab
 Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif.
 
