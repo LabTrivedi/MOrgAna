@@ -10,14 +10,14 @@ import os
 
 # import sys
 # sys.path.append(os.path.join('..'))
-from orgseg.GUIs.manualmask import makeManualMask
-from orgseg.DatasetTools import io
+from morgana.GUIs.manualmask import makeManualMask
+from morgana.DatasetTools import io
 
 
 ###############################################################################
 
 model_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','model'),
+                    os.path.join('test_data','2020-09-22_conditions','model_'),
                 ]
 
 ###############################################################################
@@ -28,14 +28,14 @@ def create_GT_mask(model_folder):
     if not os.path.exists(model_folder):
         print('Warning!')
         print(model_folder,':')
-        print('Model folder not created! Skipping this gastruloid.')
+        print('Model folder not created! Skipping this subfolder.')
         return
         
     trainingset_folder = os.path.join(model_folder,'trainingset')
     if not os.path.exists(trainingset_folder):
         print('Warning!')
         print(model_folder,':')
-        print('Trainingset images not found! Skipping this gastruloid.')
+        print('Trainingset images not found! Skipping this subfolder.')
         return
 
     ### load trainingset images and previously generated ground truth    
@@ -44,7 +44,7 @@ def create_GT_mask(model_folder):
     flist_gt = io.get_image_list(trainingset_folder, string_filter='_GT', mode_filter='include')
     flist_gt.sort()
 
-    ### if no trainingset images in the folder, skip this gastruloid
+    ### if no trainingset images in the folder, skip this subfolder
     if len(flist_in) == 0:
         print('\n\nWarning, no trainingset!','Selected "'+model_folder+'" but no trainingset *data* detected. Transfer some images in the "trainingset" folder.')
         return
