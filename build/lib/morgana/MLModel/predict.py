@@ -2,6 +2,8 @@ import os, time
 import numpy as np
 from skimage import transform, morphology, measure, segmentation
 from sklearn.metrics import classification_report
+from skimage.io import imread, imsave
+import scipy.ndimage as ndi
 
 from morgana.ImageTools import processfeatures
 
@@ -158,3 +160,60 @@ def make_watershed( mask, edge,
     labels = transform.resize(labels, original_shape, order=0, preserve_range=False).astype(np.uint8)
 
     return labels
+
+def predict_single_image(f_in, classifier, scaler, params):
+
+    parent, filename = os.path.split(f_in)
+    filename, file_extension = os.path.splitext(filename)
+    new_name_classifier = os.path.join(
+                    parent,
+                    'result_segmentation',
+                    filename+'_classifier'+file_extension
+                    )
+    new_name_watershed = os.path.join(
+                    parent,
+                    'result_segmentation',
+                    filename+'_watershed'+file_extension
+                    )
+
+#    print('#'*20+'\nLoading',f_in,'...')
+    img = imread(f_in)
+    if len(img.shape)==2:
+        img = np.expand_dims(img,0)
+    if img.shape[-1] == np.min(img.shape):
+        img = np.moveaxis(img, -1, 0)
+    img = img[0]
+
+    if not os.path.exists(new_name_classifier):
+        # print('Predicting image...')
+
+        pred, prob = predict_image( 
+                            img,
+                            classifier,
+                            scaler,
+                            sigmas = params['sigmas'],
+                            new_shape_scale = params['down_shape'],
+                            feature_mode = params['feature_mode']
+                            )
+    
+        # remove objects at the border
+        negative = ndi.binary_fill_holes(pred==0)
+        mask_pred = (pred==1)*negative
+        edge_prob = ((2**16-1)*prob[2]).astype(np.uint16)
+        mask_pred = mask_pred.astype(np.uint8)
+    
+        # save mask
+        imsave(new_name_classifier, pred)
+
+    if not os.path.exists(new_name_watershed):
+        # perform watershed
+        mask_final = make_watershed(
+                            mask_pred,
+                            edge_prob,
+                            new_shape_scale = params['down_shape'] 
+                            )
+    
+        # save final mask
+        imsave(new_name_watershed, mask_final)
+    
+    return None
