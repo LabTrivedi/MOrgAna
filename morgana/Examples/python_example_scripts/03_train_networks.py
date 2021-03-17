@@ -23,13 +23,14 @@ model_folders = [
                     os.path.join('test_data','2020-09-22_conditions','model'),
                 ]
 
-### define parameters for network training
-sigmas = [0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 2.5, 5.0, 7.5, 10.0, 15.0, 50.0]
+### define parameters for feature generation for network training
+sigmas = [1.0, 5.0, 15.0]
 downscaling = 0.25
 edge_size = 5
 pxl_extract_fraction = 0.25
 pxl_extract_bias = 0.4
-feature_type = 'daisy'
+feature_type = 'daisy' # or 'ilastik'
+deep = True # True: deep learning with Multi Layer Perceptrons; False: Logistic regression
 
 ###############################################################################
 
@@ -91,7 +92,7 @@ if __name__ == '__main__':
 
         print('##### Training model...')
         start = time.time()
-        classifier = train.train_classifier( X, Y, w )
+        classifier = train.train_classifier( X, Y, w, deep = deep )
         print('Models trained in %.3f seconds.'%(time.time()-start))
         print('classes_: ', classifier.classes_)
         print('coef_: ', classifier.coef_)
@@ -108,7 +109,8 @@ if __name__ == '__main__':
                         edge_size = edge_size,
                         fraction = pxl_extract_fraction,
                         feature_mode = feature_type,
-                        bias = pxl_extract_bias
+                        bias = pxl_extract_bias,
+                        deep = deep
                         )
         print('##### Model saved!')
 
