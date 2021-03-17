@@ -62,11 +62,9 @@ def generate_training_set( _input, gt,
         edge = Y - morphology.binary_dilation(Y, morphology.disk(1))
         edge = morphology.binary_dilation(edge, morphology.disk(edge_size))
         Y = 1 * np.logical_or(Y, edge) + edge
-        print(X.shape, Y.shape)
 
         # flatten the images and normalize to -std:+std
         X = np.transpose(np.reshape(X, (X.shape[0], np.prod(shape)))) # flatten the image feature
-        print(X.shape, Y.shape)
 
         Y = np.reshape(Y, np.prod(shape)) # flatten the ground truth
         edge = np.reshape(edge, np.prod(shape)) # flatten the edge
