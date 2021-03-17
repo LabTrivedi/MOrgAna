@@ -22,11 +22,12 @@ from orgseg.MLModel import predict
 ###############################################################################
 
 image_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','init_150cells'),
-                    os.path.join('test_data','2020-09-22_conditions','init_300cells'),
+                    # os.path.join('test_data','2020-09-22_conditions','init_150cells'),
+                    # os.path.join('test_data','2020-09-22_conditions','init_300cells'),
+                    os.path.join('Y:',os.sep,'Jia_Le_Lim','morgana_example_datasets','gastruloids','condA')
                 ]
 
-model_folder = os.path.join('test_data','2020-09-22_conditions','model')
+model_folder = glob.glob(os.path.join(parent_folder,'model_*'))#os.path.join('test_data','2020-09-22_conditions','model')
 
 ###############################################################################
 

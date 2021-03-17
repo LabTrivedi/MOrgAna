@@ -403,6 +403,7 @@ class morganaApp(QWidget):
 
         print('##### Training model...')
         start = time.time()
+        print(X.shape,Y.shape,w.shape)
         self.classifier = train.train_classifier( X, Y, w, deep=self.deepModel.isChecked(), hidden=(350, 50) )
         print('Models trained in %.3f seconds.'%(time.time()-start))
         # print('classes_: ', self.classifier.classes_)
@@ -476,7 +477,8 @@ class morganaApp(QWidget):
                                 self.scaler,
                                 sigmas=self.params['sigmas'],
                                 new_shape_scale=self.params['down_shape'],
-                                feature_mode=self.params['feature_mode'] )
+                                feature_mode=self.params['feature_mode'],
+                                deep=self.deepModel.isChecked() )
 
             # remove objects at the border
             negative = ndi.binary_fill_holes(pred==0)

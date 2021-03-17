@@ -47,14 +47,19 @@ def predict(  _input, classifier,
                     shape=None,
                     check_time=False,
                     gt=np.array([]),
+                    deep=False
                     ):
     if shape is None:
         shape = _input.shape
-        
+
     # use classifier to predict image
     start = time.time()   
-    y_prob = classifier.predict(_input) # predict probabilities of every pixel for every class
+    if deep:
+        y_prob = classifier.predict(_input) # predict probabilities of every pixel for every class
+    else:
+        y_prob = classifier.predict_proba(_input)
     y_pred = y_prob.argmax(axis=-1).astype(np.uint8)
+
     if check_time:
         print(time.time()-start)
         
@@ -89,7 +94,8 @@ def predict_image(  _input, classifier, scaler,
                     sigmas=[.1,.5,1,2.5,5,7.5,10],
                     new_shape_scale=-1,
                     feature_mode='ilastik',
-                    check_time=False):
+                    check_time=False,
+                    deep=False):
     original_shape = _input.shape
     n_classes = 3#len(classifier.classes_)
 
@@ -99,11 +105,12 @@ def predict_image(  _input, classifier, scaler,
                     new_shape_scale=new_shape_scale,
                     feature_mode=feature_mode,
                     check_time=check_time)
-    
+
     y_pred, y_prob = predict(  _input, classifier,
                                 gt=gt,
                                 check_time=check_time,
-                                shape=shape)
+                                shape=shape,
+                                deep=deep)
 
     y_pred, y_prob = reshape(y_pred,y_prob,
                              original_shape,shape,
@@ -161,7 +168,7 @@ def make_watershed( mask, edge,
 
     return labels
 
-def predict_single_image(f_in, classifier, scaler, params):
+def predict_single_image(f_in, classifier, scaler, params, deep=False):
 
     parent, filename = os.path.split(f_in)
     filename, file_extension = os.path.splitext(filename)
@@ -193,7 +200,8 @@ def predict_single_image(f_in, classifier, scaler, params):
                             scaler,
                             sigmas = params['sigmas'],
                             new_shape_scale = params['down_shape'],
-                            feature_mode = params['feature_mode']
+                            feature_mode = params['feature_mode'],
+                            deep=deep
                             )
     
         # remove objects at the border

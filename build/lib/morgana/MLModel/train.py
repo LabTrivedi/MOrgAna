@@ -108,8 +108,8 @@ def train_classifier( X, Y, w, deep=False, epochs=50, n_classes = 3, hidden=(350
         classifier.fit(X, Y, sample_weight=w)
     else:
         print('Training of MLP classifier...')
-        from tensorflow import keras
         from tensorflow.keras import layers
+        from tensorflow import keras
         Y = keras.utils.to_categorical(Y, num_classes=n_classes, dtype='int')
 
         # Create the model
