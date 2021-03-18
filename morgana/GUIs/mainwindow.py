@@ -774,6 +774,7 @@ class morganaApp(QWidget):
                         'perimeter',
                         'euler_number',
                         'extent',
+                        'form_factor',
                         # 'inertia_tensor',
                         # 'inertia_tensor_eigvals',
                         # 'moments',

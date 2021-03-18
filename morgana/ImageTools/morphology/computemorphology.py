@@ -48,6 +48,8 @@ def compute_morphological_info( mask, f_in, f_ma, down_shape,
     for key in keys:
         dict_[key] = props[0][key]
 
+    dict_['form_factor'] = dict_['perimeter']**2/(4*np.pi*dict_['area'])
+
     ## append file info that come as input and are not computed by default
     dict_['input_file'] = os.path.split(f_in)[1]
     dict_['mask_file'] = os.path.join('result_segmentation', os.path.split(f_ma)[1] )
