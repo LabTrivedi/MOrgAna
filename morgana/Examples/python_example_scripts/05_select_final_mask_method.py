@@ -5,24 +5,36 @@ Created on Fri Apr 24 16:46:26 2020
 @author: gritti
 """
 
-import os
-
-# import sys
-# sys.path.append(os.path.join('..'))
-from orgseg.GUIs import inspection
-from orgseg.DatasetTools.segmentation import io as ioSeg
-from orgseg.DatasetTools import io as ioDT
+import os, glob, sys
+import PyQt5.QtWidgets
+from morgana.GUIs import inspection
+from morgana.DatasetTools.segmentation import io as ioSeg
+from morgana.DatasetTools import io as ioDT
 
 ###############################################################################
 
-image_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','init_150cells'),
-                    os.path.join('test_data','2020-09-22_conditions','init_300cells'),
-                ]
+# select folder containing all image folders to be analysed
+parent_folder = os.path.join('/','Users','jialelim', 'Desktop', 'example_dataset_ipynb', 'condA')
+print('Image subfolders found in: ' + parent_folder)
+if os.path.exists(parent_folder):
+    print('Path exists! Proceed!')# check if the path exists
+
+# find out all image subfolders in parent_folder
+folder_names = next(os.walk(parent_folder))[1] 
+
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
+model_folders_name = [os.path.split(model_folder)[-1] for model_folder in model_folders]
+
+# exclude folders in exclude_folder
+exclude_folder = ['']
+
+image_folders = [g for g in folder_names if not g in model_folders_name + exclude_folder]
+image_folders = [os.path.join(parent_folder, i) for i in image_folders]
 
 ###############################################################################
 
 if __name__ == '__main__':
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
 
     for image_folder in image_folders:
 
@@ -58,5 +70,5 @@ if __name__ == '__main__':
                 stop=20
                 )
         w.show()
-        w.exec()
-
+        app.exec()
+    app.quit()

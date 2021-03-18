@@ -5,105 +5,52 @@ Created on Fri Apr 24 16:26:06 2020
 @author: gritti
 """
 
-import os, tqdm
+import os, tqdm, glob
 from skimage.io import imread, imsave
 import numpy as np
 import scipy.ndimage as ndi
 import multiprocessing
 from itertools import repeat
-
-# import sys
-# sys.path.append(os.path.join('..'))
-from orgseg.DatasetTools import io as ioDT
-import orgseg.DatasetTools.multiprocessing.istarmap
-from orgseg.MLModel import io as ioML
-from orgseg.MLModel import predict
+from morgana.DatasetTools import io as ioDT
+import morgana.DatasetTools.multiprocessing.istarmap
+from morgana.MLModel import io as ioML
+from morgana.MLModel import predict
 
 ###############################################################################
+# select folder containing all image folders to be analysed
+parent_folder = os.path.join('/','Users','jialelim', 'Desktop', 'example_dataset_ipynb', 'condA')
 
-image_folders = [
-                    # os.path.join('test_data','2020-09-22_conditions','init_150cells'),
-                    # os.path.join('test_data','2020-09-22_conditions','init_300cells'),
-                    os.path.join('Y:',os.sep,'Jia_Le_Lim','morgana_example_datasets','gastruloids','condA')
-                ]
+# find out all image subfolders in parent_folder
+folder_names = next(os.walk(parent_folder))[1] 
 
-model_folder = glob.glob(os.path.join(parent_folder,'model_*'))#os.path.join('test_data','2020-09-22_conditions','model')
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
+model_folders_name = [os.path.split(model_folder)[-1] for model_folder in model_folders]
 
-###############################################################################
+# exclude folders in exclude_folder
+exclude_folder = []
 
-def predict_single_image(f_in, classifier, scaler, params):
+image_folders = [g for g in folder_names if not g in model_folders_name + exclude_folder]
+image_folders = [os.path.join(parent_folder, i) for i in image_folders]
 
-    parent, filename = os.path.split(f_in)
-    filename, file_extension = os.path.splitext(filename)
-    new_name_classifier = os.path.join(
-                    parent,
-                    'result_segmentation',
-                    filename+'_classifier'+file_extension
-                    )
-    new_name_watershed = os.path.join(
-                    parent,
-                    'result_segmentation',
-                    filename+'_watershed'+file_extension
-                    )
-
-#    print('#'*20+'\nLoading',f_in,'...')
-    img = imread(f_in)
-    if len(img.shape)==2:
-        img = np.expand_dims(img,0)
-    if img.shape[-1] == np.min(img.shape):
-        img = np.moveaxis(img, -1, 0)
-    img = img[0]
-
-    if not os.path.exists(new_name_classifier):
-        # print('Predicting image...')
-
-        pred, prob = predict.predict_image( 
-                            img,
-                            classifier,
-                            scaler,
-                            sigmas = params['sigmas'],
-                            new_shape_scale = params['down_shape'],
-                            feature_mode = params['feature_mode']
-                            )
-    
-        # remove objects at the border
-        negative = ndi.binary_fill_holes(pred==0)
-        mask_pred = (pred==1)*negative
-        edge_prob = ((2**16-1)*prob[2]).astype(np.uint16)
-        mask_pred = mask_pred.astype(np.uint8)
-    
-        # save mask
-        imsave(new_name_classifier, pred)
-
-    if not os.path.exists(new_name_watershed):
-        # perform watershed
-        mask_final = predict.make_watershed(
-                            mask_pred,
-                            edge_prob,
-                            new_shape_scale = params['down_shape'] 
-                            )
-    
-        # save final mask
-        imsave(new_name_watershed, mask_final)
-    
-    return None
+deep = False # True: deep learning with Multi Layer Perceptrons; False: Logistic regression
 
 ###############################################################################
     
 if __name__ == '__main__':
     
-    for image_folder in image_folders:
+    for i in range(len(image_folders)):
+        
+        image_folder = image_folders[i]
+        if len(model_folders)>1:
+            model_folder = model_folders[i]
+        else:
+            model_folder = model_folders[0]
 
-        ### compute parent folder as absolute path
-        image_folder = os.path.abspath(image_folder)
-    
         print('-------------'+image_folder+'------------')
-        training_folder = os.path.join(model_folder, 'trainingset')
-
         print('##### Loading classifier model and parameters...')
-        classifier, scaler, params = ioML.load_model( model_folder )
+        classifier, scaler, params = ioML.load_model( model_folder, deep = deep)
         print('##### Model loaded!')
-              
+
         #######################################################################
         ### apply classifiers and save images
 
@@ -114,7 +61,7 @@ if __name__ == '__main__':
         flist_in = ioDT.get_image_list(image_folder)
         flist_in.sort()        
         N_img = len(flist_in)
-        
+
         # multiprocess
         N_cores = np.clip( int(0.8 * multiprocessing.cpu_count()),1,None )
 
@@ -122,11 +69,11 @@ if __name__ == '__main__':
         pool = multiprocessing.Pool(N_cores)
         _ = list(   tqdm.tqdm(
                                 pool.istarmap(
-                                    predict_single_image, 
+                                    predict.predict_single_image, 
                                     zip(    flist_in, 
                                             repeat(classifier),
                                             repeat(scaler),
                                             repeat(params) ) ), 
                                     total = N_img ) )
 
-        print('All images done!')
+    print('All images done!')

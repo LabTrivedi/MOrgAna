@@ -18,7 +18,7 @@ if os.path.exists(parent_folder):
 
 # select images for training dataset
 start = 0 # increase value to exclude starting images in dataset
-dN = 0 # every dNth image will be used for the training dataset; if dN = 0, random images are taken
+dN = 10 # every dNth image will be used for the training dataset; if dN = 0, random images are taken
 
 # True: create one model for all folders; False: create one model for each image subfolder
 combine_subfolders = True

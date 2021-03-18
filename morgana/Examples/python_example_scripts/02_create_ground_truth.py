@@ -5,20 +5,18 @@ Created on Fri Apr 24 12:26:12 2020
 @author: gritti
 """
 
-import tqdm
-import os
-
-# import sys
-# sys.path.append(os.path.join('..'))
+import tqdm, os, glob
 from morgana.GUIs.manualmask import makeManualMask
 from morgana.DatasetTools import io
 
-
 ###############################################################################
+# select folder containing all image folders to be analysed
+parent_folder = os.path.join('test_data','2020-09-22_conditions')
+print('Image subfolders found in: ' + parent_folder)
+if os.path.exists(parent_folder):
+    print('Path exists! Proceed!')# check if the path exists
 
-model_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','model_'),
-                ]
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
 
 ###############################################################################
 
@@ -69,5 +67,5 @@ if __name__ == '__main__':
     ### compute parent folder as absolute path
     model_folders = [os.path.abspath(i) for i in model_folders]
     
-    for model_folder in tqdm.tqdm(model_folders):
+    for model_folder in tqdm(model_folders):
         create_GT_mask(model_folder)

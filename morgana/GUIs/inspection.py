@@ -31,7 +31,6 @@ warnings.filterwarnings("ignore")
 class inspectionWindow_20max(QDialog):
     def __init__(self, imageFolder, parent=None, start=None, stop=None):
         super(inspectionWindow_20max, self).__init__(parent)
-
         self.imageFolder = imageFolder
         self.folder, self.cond = os.path.split(self.imageFolder)
         self.flist_in = io.get_image_list(self.imageFolder)
@@ -46,8 +45,13 @@ class inspectionWindow_20max(QDialog):
         self.stop = np.clip(self.stop,0,self.n_imgs)
         self.n_shown = self.stop-self.start
         self.showMore = False
+        n_img = len(self.flist_in)
+        ncols = 5
+        nrows = (n_img-1)//5+1
+        self.overview,ax = plt.subplots(figsize=(3*ncols,3*nrows), nrows=nrows, ncols=ncols)
+        ax = ax.flatten()
 
-        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)
+        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5, fig=self.overview, ax=ax)
         self.overview.show()
 
         if os.path.exists(os.path.join(self.imageFolder,'result_segmentation','segmentation_params.csv')):
@@ -419,8 +423,13 @@ class inspectionWindow_20max(QDialog):
     def remake(self):
         self.n_shown = self.stop-self.start
         self.showMore = False
+        n_img = len(self.flist_in)
+        ncols = 5
+        nrows = (n_img-1)//5+1
+        self.overview,ax = plt.subplots(figsize=(3*ncols,3*nrows), nrows=nrows, ncols=ncols)
+        ax = ax.flatten()
 
-        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)
+        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5, fig=self.overview, ax=ax)
         self.overview.show()
 
         self.flist_in, self.chosen_masks, self.down_shapes, self.thinnings, self.smoothings = ioSeg.load_segmentation_params( os.path.join(self.imageFolder,'result_segmentation') )
