@@ -12,30 +12,41 @@ Created on Fri Apr 24 16:46:26 2020
 @author: gritti
 """
 
-import os, tqdm
+import os, tqdm, glob, sys
+import PyQt5.QtWidgets
 from skimage.io import imread, imsave
 import numpy as np
-
-# import sys
-# sys.path.append(os.path.join('..'))
-from orgseg.DatasetTools import io as ioDT
-from orgseg.DatasetTools.segmentation import io as ioSeg
-from orgseg.DatasetTools.morphology import io as ioMorph
-from orgseg.DatasetTools.morphology import computemorphology, overview
-from orgseg.ImageTools.segmentation import segment
-from orgseg.GUIs import manualmask
+from morgana.DatasetTools import io as ioDT
+from morgana.DatasetTools.segmentation import io as ioSeg
+from morgana.DatasetTools.morphology import io as ioMorph
+from morgana.DatasetTools.morphology import computemorphology, overview
+from morgana.ImageTools.segmentation import segment
+from morgana.GUIs import manualmask
 
 ###############################################################################
 
-image_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','init_150cells'),
-                    os.path.join('test_data','2020-09-22_conditions','init_300cells'),
-                ]
+# select folder containing all image folders to be analysed
+parent_folder = os.path.join('test_data','2020-09-22_conditions')
+print('Image subfolders found in: ' + parent_folder)
+if os.path.exists(parent_folder):
+    print('Path exists! Proceed!')# check if the path exists
+
+# find out all image subfolders in parent_folder
+folder_names = next(os.walk(parent_folder))[1] 
+
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
+model_folders_name = [os.path.split(model_folder)[-1] for model_folder in model_folders]
+
+# exclude folders in exclude_folder
+exclude_folder = ['']
+
+image_folders = [g for g in folder_names if not g in model_folders_name + exclude_folder]
+image_folders = [os.path.join(parent_folder, i) for i in image_folders]
 
 ###############################################################################
 
 if __name__ == '__main__':
-
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
     for image_folder in image_folders:
 
         ### compute parent folder as absolute path
@@ -118,6 +129,10 @@ if __name__ == '__main__':
                     
                 elif chosen_masks[i] == 'm':
                     if not os.path.exists(os.path.join(result_folder,filename+'_manual'+extension)):
+                        if not PyQt5.QtWidgets.QApplication.instance():
+                            app = PyQt5.QtWidgets.QApplication(sys.argv)
+                        else:
+                            app = PyQt5.QtWidgets.QApplication.instance() 
                         m = manualmask.makeManualMask(flist_in[i])
                         m.show()
                         m.exec()
@@ -187,21 +202,3 @@ if __name__ == '__main__':
                 imsave(final_mask_name, mask)
 
         print('### Done computing masks!')
-
-        #######################################################################
-        ### compute  morphology (also done in next script)
-
-        morpho_file_name = os.path.join(result_folder,cond+'_morpho_params.json')
-        
-        if not os.path.exists(morpho_file_name):
-            props = computemorphology.compute_morphological_info(image_folder, False)
-            ioMorph.save_morpho_params(result_folder, cond, props)
-
-        #######################################################################
-        ### generate overview of masks (optional)
-
-#        overview.generate_overview_finalMask(
-#                                gastr_folder, 
-#                                chosen=[c!='i' for c in chosen_masks], 
-#                                saveFig=True, downshape=3
-#                                )

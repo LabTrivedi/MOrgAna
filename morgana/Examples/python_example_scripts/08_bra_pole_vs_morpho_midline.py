@@ -5,16 +5,9 @@ Created on Thu Apr 23 11:36:41 2020
 @author: gritti
 """
 
-import sys, time, tqdm, copy, os
-sys.path.append(os.path.join('..'))
-
-from orgseg.ImageTools.morphology import meshgrid
-from orgseg.DatasetTools.straightmorphology import io as ioStr
-from orgseg.DatasetTools.morphology import io as ioMorph
-from orgseg.DatasetTools.fluorescence import io as ioFluo
-
+import sys, time, tqdm, copy, os, glob
+# sys.path.append(os.path.join('..'))
 import pandas as pd
-import tqdm
 import numpy as np
 from scipy.ndimage import map_coordinates
 from skimage.io import imread, imsave
@@ -32,12 +25,30 @@ rc('font', family='Arial')
 rc('pdf', fonttype=42)
 # rc('text', usetex=True)
 
+from morgana.ImageTools.morphology import meshgrid
+from morgana.DatasetTools.straightmorphology import io as ioStr
+from morgana.DatasetTools.morphology import io as ioMorph
+from morgana.DatasetTools.fluorescence import io as ioFluo
+
 #####################################################
 
-parent_folder = os.path.join('test_data','2020-02-20_conditions')
-    
-### add gastruloids that you want to ignore here
-exclude_gastr = []
+# select folder containing all image folders to be analysed
+# parent_folder = os.path.join('test_data','2020-09-22_conditions')
+print('Image subfolders found in: ' + parent_folder)
+if os.path.exists(parent_folder):
+    print('Path exists! Proceed!')# check if the path exists
+
+# find out all image subfolders in parent_folder
+folder_names = next(os.walk(parent_folder))[1] 
+
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
+model_folders_name = [os.path.split(model_folder)[-1] for model_folder in model_folders]
+
+# exclude folders in exclude_folder
+exclude_folder = ['']
+
+image_folders = [g for g in folder_names if not g in model_folders_name + exclude_folder]
+image_folders = [os.path.join(parent_folder, i) for i in image_folders]
 
 ###########################################################################
 
@@ -49,18 +60,10 @@ if __name__ == '__main__':
     ### compute parent folder as absolute path
     parent_folder = os.path.abspath(parent_folder)
     
-    #### find out all gastruloids in parent_folder
-    gastr_names = next(os.walk(parent_folder))[1]
-    
-    ### exclude gastruloids
-    gastr_names = [g for g in gastr_names if not g in exclude_gastr ]
-    
-#    gastr = [gastr_names[0]]
-    
-    for gastr in gastr_names:
-        print('-------------'+gastr+'------------')
-        
-        save_folder = os.path.join(parent_folder,gastr,'result_segmentation')
+    for image_folder in image_folders:
+        print('-------------'+image_folder+'------------')
+        image_folder = os.path.split(image_folder)[-1]
+        save_folder = os.path.join(parent_folder,image_folder,'result_segmentation')
         
         bra_fname = os.path.join(save_folder,'Bra_pole_info.json')
         
@@ -69,12 +72,12 @@ if __name__ == '__main__':
 #            for i in tqdm.tqdm(range(10)):
 #                time.sleep(60)
                 
-            df_morpho = ioMorph.load_morpho_params( save_folder, gastr )
+            df_morpho = ioMorph.load_morpho_params( save_folder, image_folder )
             df_straight = ioStr.load_straight_morpho_params(
                                                                             save_folder, 
-                                                                            gastr
+                                                                            image_folder
                                                                             )
-            df_fluo = ioFluo.load_fluo_info( save_folder, gastr )
+            df_fluo = ioFluo.load_fluo_info( save_folder, image_folder )
 
             N_img = len(df_morpho.input_file)
             
@@ -101,12 +104,12 @@ if __name__ == '__main__':
                 f_in = df_morpho.input_file[i]
                 f_ma = df_morpho.mask_file[i]
                 _slice = df_morpho.slice[i]
-                image = imread(os.path.join(parent_folder,gastr,f_in))
+                image = imread(os.path.join(parent_folder,image_folder,f_in))
                 image = np.stack([ img[_slice].astype(np.float) for img in image ])
                 bckg = df_fluo.ch1_Background[i]
                 image[1] = image[1].astype(float)-bckg
                 image[1] = np.clip(image[1],0,None)
-                mask = imread(os.path.join(parent_folder,gastr,f_ma))[_slice]
+                mask = imread(os.path.join(parent_folder,image_folder,f_ma))[_slice]
                 
                 # compute the meshgrid
                 tangent = df_morpho.tangent[i]
@@ -187,7 +190,7 @@ if __name__ == '__main__':
                 ax1[1].plot([centroid[1],pole_pos[1]],[centroid[0],pole_pos[0]],'--w')
     #            plt.show(fig1)
 #                plt.pause(10)
-                fig1.savefig(os.path.join(save_folder,'gastr_tp%05d.pdf'%i))
+                fig1.savefig(os.path.join(save_folder,'img%05d.pdf'%i))
                 plt.close(fig1)
                 
                 # find angle between
@@ -238,4 +241,4 @@ if __name__ == '__main__':
                             })   
         
             data.to_json(bra_fname)
-        
+    print('Polarity computed. For further graphs, please use the GUI.')

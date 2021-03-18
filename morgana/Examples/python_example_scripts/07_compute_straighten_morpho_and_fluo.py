@@ -3,43 +3,38 @@
 Created on Sat Apr 25 16:59:16 2020
 
 @author: gritti
-"""
 
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 25 11:24:40 2020
-
-@author: gritti
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 24 16:46:26 2020
-
-@author: gritti
 """
 
 import os, glob, tqdm
 from skimage.io import imread, imsave
 import numpy as np
-
-# import sys
-# sys.path.append(os.path.join('..'))
-# from orgseg.DatasetTools import io as ioDT
-from orgseg.DatasetTools.morphology import overview
-from orgseg.DatasetTools.morphology import computemorphology
-from orgseg.DatasetTools.morphology import io as ioMorph
-from orgseg.DatasetTools.straightmorphology import computestraightmorphology
-from orgseg.DatasetTools.straightmorphology import io as ioStr
-from orgseg.DatasetTools.fluorescence import computefluorescence
-from orgseg.DatasetTools.fluorescence import io as ioFluo
+from morgana.DatasetTools.morphology import overview
+from morgana.DatasetTools.morphology import computemorphology
+from morgana.DatasetTools.morphology import io as ioMorph
+from morgana.DatasetTools.straightmorphology import computestraightmorphology
+from morgana.DatasetTools.straightmorphology import io as ioStr
+from morgana.DatasetTools.fluorescence import computefluorescence
+from morgana.DatasetTools.fluorescence import io as ioFluo
 
 ###############################################################################
 
-image_folders = [
-                    os.path.join('test_data','2020-09-22_conditions','init_150cells'),
-                    os.path.join('test_data','2020-09-22_conditions','init_300cells'),
-                ]
+# select folder containing all image folders to be analysed
+parent_folder = os.path.join('test_data','2020-09-22_conditions')
+if os.path.exists(parent_folder):
+    print('Path exists! Proceed!')# check if the path exists
+
+# find out all image subfolders in parent_folder
+folder_names = next(os.walk(parent_folder))[1] 
+
+model_folders = glob.glob(os.path.join(parent_folder,'model_*'))
+model_folders_name = [os.path.split(model_folder)[-1] for model_folder in model_folders]
+
+# exclude folders in exclude_folder
+exclude_folder = ['']
+
+image_folders = [g for g in folder_names if not g in model_folders_name + exclude_folder]
+image_folders = [os.path.join(parent_folder, i) for i in image_folders]
 
 ###############################################################################
     
@@ -132,4 +127,4 @@ if __name__ == '__main__':
         print('Cleaning up manual masks')
         for f in tqdm.tqdm(flist):
             os.remove(f)
-
+    print('Done! All morphology and fluorescence information computed.')

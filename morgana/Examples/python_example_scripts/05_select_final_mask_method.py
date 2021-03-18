@@ -14,7 +14,7 @@ from morgana.DatasetTools import io as ioDT
 ###############################################################################
 
 # select folder containing all image folders to be analysed
-parent_folder = os.path.join('/','Users','jialelim', 'Desktop', 'example_dataset_ipynb', 'condA')
+parent_folder = os.path.join('test_data','2020-09-22_conditions')
 print('Image subfolders found in: ' + parent_folder)
 if os.path.exists(parent_folder):
     print('Path exists! Proceed!')# check if the path exists
