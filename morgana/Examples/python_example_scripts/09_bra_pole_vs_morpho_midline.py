@@ -34,6 +34,8 @@ from morgana.DatasetTools.fluorescence import io as ioFluo
 
 # select folder containing all image folders to be analysed
 # parent_folder = os.path.join('test_data','2020-09-22_conditions')
+parent_folder = os.path.join('/','Volumes','trivedi', 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condA')
+
 print('Image subfolders found in: ' + parent_folder)
 if os.path.exists(parent_folder):
     print('Path exists! Proceed!')# check if the path exists

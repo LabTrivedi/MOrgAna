@@ -8,6 +8,7 @@ Created on Sun Mar 21 11:36:41 2021
 import sys, time, tqdm, copy, os, glob
 from skimage.io import imread, imsave
 import numpy as np
+import PyQt5.QtWidgets
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import warnings

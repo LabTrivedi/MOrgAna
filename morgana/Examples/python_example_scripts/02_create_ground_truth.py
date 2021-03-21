@@ -64,7 +64,6 @@ def create_GT_mask(model_folder):
                     app = PyQt5.QtWidgets.QApplication.instance() 
                 m = makeManualMask(f,subfolder='',fn=fn+'_GT'+ext,wsize = (2000,2000))
                 m.show()
-                m.exec()
                 app.exec_()
 ###############################################################################
 
@@ -73,6 +72,7 @@ if __name__ == '__main__':
     ### compute parent folder as absolute path
     model_folders = [os.path.abspath(i) for i in model_folders]
     
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
     for model_folder in tqdm.tqdm(model_folders):
         create_GT_mask(model_folder)
     app.quit()

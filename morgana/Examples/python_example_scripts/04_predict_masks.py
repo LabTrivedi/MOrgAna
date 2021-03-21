@@ -18,7 +18,8 @@ from morgana.MLModel import predict
 
 ###############################################################################
 # select folder containing all image folders to be analysed
-parent_folder = os.path.join('test_data','2020-09-22_conditions')
+# parent_folder = os.path.join('test_data','2020-09-22_conditions')
+parent_folder = os.path.join('/','Volumes','trivedi', 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condC')
 
 # find out all image subfolders in parent_folder
 folder_names = next(os.walk(parent_folder))[1] 
