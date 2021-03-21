@@ -11,14 +11,15 @@ from numpy.random import default_rng
 
 ###############################################################################
 # select folder containing all image folders to be analysed
-parent_folder = os.path.join('test_data','2020-09-22_conditions')
+# parent_folder = os.path.join('test_data','2020-09-22_conditions')
+parent_folder = os.path.join('/','Volumes','trivedi', 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condC')
 print('Image subfolders found in: ' + parent_folder)
 if os.path.exists(parent_folder):
     print('Path exists! Proceed!')# check if the path exists
 
 # select images for training dataset
 start = 0 # increase value to exclude starting images in dataset
-dN = 10 # every dNth image will be used for the training dataset; if dN = 0, random images are taken
+dN = 0 # every dNth image will be used for the training dataset; if dN = 0, random images are taken
 
 # True: create one model for all folders; False: create one model for each image subfolder
 combine_subfolders = True
