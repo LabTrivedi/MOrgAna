@@ -18,8 +18,7 @@ from morgana.MLModel import predict
 
 ###############################################################################
 # select folder containing all image folders to be analysed
-# parent_folder = os.path.join('test_data','2020-09-22_conditions')
-parent_folder = os.path.join('/','Volumes','trivedi', 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condC')
+parent_folder = os.path.join('test_data','2020-09-22_conditions')
 
 # find out all image subfolders in parent_folder
 folder_names = next(os.walk(parent_folder))[1] 
@@ -66,15 +65,20 @@ if __name__ == '__main__':
         # multiprocess
         N_cores = np.clip( int(0.8 * multiprocessing.cpu_count()),1,None )
 
-        # try using multiprocessing
-        pool = multiprocessing.Pool(N_cores)
-        _ = list(   tqdm.tqdm(
-                                pool.istarmap(
-                                    predict.predict_image_from_file, 
-                                    zip(    flist_in, 
-                                            repeat(classifier),
-                                            repeat(scaler),
-                                            repeat(params) ) ), 
-                                    total = N_img ) )
+        # try using multiprocessing (only for LR classifier)
+        if not deep:
+            pool = multiprocessing.Pool(N_cores)
+            _ = list(   tqdm.tqdm(
+                                    pool.istarmap(
+                                        predict.predict_image_from_file, 
+                                        zip(    flist_in, 
+                                                repeat(classifier),
+                                                repeat(scaler),
+                                                repeat(params),
+                                                repeat(deep) ) ), 
+                                        total = N_img ) )
+        else:
+            for i in tqdm.tqdm(range(N_img)):
+                predict.predict_image_from_file(flist_in[i], classifier, scaler, params, deep=deep)
 
     print('All images done!')
