@@ -168,7 +168,7 @@ def make_watershed( mask, edge,
 
     return labels
 
-def predict_single_image(f_in, classifier, scaler, params, deep=False):
+def predict_image_from_file(f_in, classifier, scaler, params, deep=False):
 
     parent, filename = os.path.split(f_in)
     filename, file_extension = os.path.splitext(filename)

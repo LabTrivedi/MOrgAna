@@ -18,6 +18,7 @@ from morgana.MLModel import train
 # parent_folder = os.path.join('test_data','2020-09-22_conditions')
 
 parent_folder = os.path.join('/','Volumes','trivedi', 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condC')
+parent_folder = os.path.join('Y:',os.sep, 'Jia_Le_Lim', 'morgana_example_datasets', 'gastruloids_ipynb', 'condC')
 
 print('Image subfolders found in: ' + parent_folder)
 if os.path.exists(parent_folder):
@@ -33,7 +34,7 @@ edge_size = 5
 pxl_extract_fraction = 0.25
 pxl_extract_bias = 0.4
 feature_type = 'daisy' # 'daisy' or 'ilastik'
-deep = False # True: deep learning with Multi Layer Perceptrons; False: Logistic regression
+deep = True # True: deep learning with Multi Layer Perceptrons; False: Logistic regression
 
 ###############################################################################
 
@@ -94,8 +95,8 @@ if __name__ == '__main__':
         start = time.time()
         classifier = train.train_classifier( X, Y, w, deep = deep )
         print('Models trained in %.3f seconds.'%(time.time()-start))
-        print('classes_: ', classifier.classes_)
-        print('coef_: ', classifier.coef_)
+        # print('classes_: ', classifier.classes_)
+        # print('coef_: ', classifier.coef_)
 
         ###################################################################
         ### Save the model

@@ -70,7 +70,7 @@ if __name__ == '__main__':
         pool = multiprocessing.Pool(N_cores)
         _ = list(   tqdm.tqdm(
                                 pool.istarmap(
-                                    predict.predict_single_image, 
+                                    predict.predict_image_from_file, 
                                     zip(    flist_in, 
                                             repeat(classifier),
                                             repeat(scaler),
