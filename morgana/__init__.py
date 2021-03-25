@@ -1,7 +1,7 @@
-import orgseg.DatasetTools
-import orgseg.GUIs
-import orgseg.ImageTools
-import orgseg.MLModel
+import morgana.DatasetTools
+import morgana.GUIs
+import morgana.ImageTools
+import morgana.MLModel
 
 # import orgseg.DatasetTools.io
 # import orgseg.DatasetTools.arrangefluodata

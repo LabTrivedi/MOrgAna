@@ -202,7 +202,7 @@ class inspectionWindow_20max(QDialog):
 
         layout = QGridLayout()
         layout.addWidget(self.computeMaskForAllButton,0,0,1,4)
-        layout.addWidget(self.compute_meshgrid,1,0,1,1)
+        layout.addWidget(self.compute_meshgrid,1,0,1,4)
         layout.addWidget(QLabel('Mask type:'),2,0,1,1)
         layout.addWidget(QLabel('Downscale:'),2,1,1,1)
         layout.addWidget(QLabel('Thinning:'),2,2,1,1)

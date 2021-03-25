@@ -1,1 +1,1 @@
-import orgseg.DatasetTools.multiprocessing.istarmap
+import morgana.DatasetTools.multiprocessing.istarmap
