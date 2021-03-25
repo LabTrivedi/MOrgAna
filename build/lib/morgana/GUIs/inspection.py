@@ -45,13 +45,8 @@ class inspectionWindow_20max(QDialog):
         self.stop = np.clip(self.stop,0,self.n_imgs)
         self.n_shown = self.stop-self.start
         self.showMore = False
-        # n_img = len(self.flist_in)
-        # ncols = 5
-        # nrows = (n_img-1)//5+1
-        # self.overview,ax = plt.subplots(figsize=(3*ncols,3*nrows), nrows=nrows, ncols=ncols)
-        # ax = ax.flatten()
 
-        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)#, fig=self.overview, ax=ax)
+        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)
         self.overview.show()
 
         if os.path.exists(os.path.join(self.imageFolder,'result_segmentation','segmentation_params.csv')):
@@ -182,11 +177,72 @@ class inspectionWindow_20max(QDialog):
         self.compute_meshgrid = QRadioButton("Compute full meshgrid (slow and high disk space usage!)")
         self.compute_meshgrid.setChecked(False)
 
+        self.setParamsForAllButton = QPushButton("Set params for all")
+        self.setParamsForAllButton.setFocusPolicy(Qt.NoFocus)
+        self.setParamsForAllButton.clicked.connect(self.setForAll)
+
+        self.masksAll = QComboBox()
+        self.masksAll.addItems(['ignore','classifier','watershed','manual'])
+        self.masksAll.setCurrentIndex(1)
+
+        self.downScaleAll = QDoubleSpinBox()
+        self.downScaleAll.setMinimum(0)
+        self.downScaleAll.setMaximum(1000)
+        self.downScaleAll.setValue(0.5)
+
+        self.thinningAll = QSpinBox()
+        self.thinningAll.setMinimum(0)
+        self.thinningAll.setMaximum(100)
+        self.thinningAll.setValue(10)
+
+        self.smoothingAll = QSpinBox()
+        self.smoothingAll.setMinimum(0)
+        self.smoothingAll.setMaximum(100)
+        self.smoothingAll.setValue(25)
+
         layout = QGridLayout()
-        layout.addWidget(self.computeMaskForAllButton,0,0,1,2)
+        layout.addWidget(self.computeMaskForAllButton,0,0,1,4)
         layout.addWidget(self.compute_meshgrid,1,0,1,1)
+        layout.addWidget(QLabel('Mask type:'),2,0,1,1)
+        layout.addWidget(QLabel('Downscale:'),2,1,1,1)
+        layout.addWidget(QLabel('Thinning:'),2,2,1,1)
+        layout.addWidget(QLabel('Smoothing:'),2,3,1,1)
+        layout.addWidget(self.masksAll,3,0,1,1)
+        layout.addWidget(self.downScaleAll,3,1,1,1)
+        layout.addWidget(self.thinningAll,3,2,1,1)
+        layout.addWidget(self.smoothingAll,3,3,1,1)
+        
+        layout.addWidget(self.setParamsForAllButton,4,0,1,4)
 
         self.group2.setLayout(layout)
+    
+    def setForAll(self):
+        # print(self.masksAll.currentText())
+        # print(self.downScaleAll.value())
+        # print(self.thinningAll.value())
+        # print(self.smoothingAll.value())
+
+        txt = self.masksAll.currentText()
+        idx = ['ignore','classifier','watershed','manual'].index(txt)
+
+        self.chosen_masks = [['i','c','w','m'][idx] for i in range(self.n_imgs)]
+        self.down_shapes = [self.downScaleAll.value() for i in range(self.n_imgs)]
+        self.thinnings = [self.thinningAll.value() for i in range(self.n_imgs)]
+        self.smoothings = [self.smoothingAll.value() for i in range(self.n_imgs)]
+        print(self.thinnings)
+        # if os.path.exists(os.path.join(self.imageFolder,'result_segmentation',self.cond+'_morpho_params.pkl')):
+        #     utils_postprocessing.generate_final_recap(self.imageFolder, 
+        #                                         chosen=[c!='' for c in self.chosen_masks], 
+        #                                         saveFig=False)
+        
+        save_folder = os.path.join(self.imageFolder, 'result_segmentation')
+        ioSeg.save_segmentation_params(  save_folder, 
+                                                        [os.path.split(fin)[-1] for fin in self.flist_in],
+                                                        self.chosen_masks,
+                                                        self.down_shapes, 
+                                                        self.thinnings, 
+                                                        self.smoothings )
+        self.remake()
 
     def show_hide(self):
         if self.showMore:
@@ -423,13 +479,8 @@ class inspectionWindow_20max(QDialog):
     def remake(self):
         self.n_shown = self.stop-self.start
         self.showMore = False
-        # n_img = len(self.flist_in)
-        # ncols = 5
-        # nrows = (n_img-1)//5+1
-        # self.overview,ax = plt.subplots(figsize=(3*ncols,3*nrows), nrows=nrows, ncols=ncols)
-        # ax = ax.flatten()
 
-        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)#, fig=self.overview, ax=ax)
+        self.overview = MLModel.overview.generate_overview(self.imageFolder, saveFig=False, start = self.start, stop = self.stop, downshape=5)
         self.overview.show()
 
         self.flist_in, self.chosen_masks, self.down_shapes, self.thinnings, self.smoothings = ioSeg.load_segmentation_params( os.path.join(self.imageFolder,'result_segmentation') )
