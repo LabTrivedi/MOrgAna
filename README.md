@@ -1,6 +1,6 @@
-<p align="left">
-	<img src="morgana/Examples/app_screenshots/morgana_icon.png" alt="front_page" width="100"/>
-</p> # MOrgAna
+
+<img align="left" width="80" height="80" img src="morgana/Examples/app_screenshots/morgana_icon.png" alt="front_page">
+# MOrgAna
 
 Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids.
 
