@@ -1,2 +1,0 @@
-import morgana.DatasetTools.straightmorphology.computestraightmorphology
-import morgana.DatasetTools.straightmorphology.io

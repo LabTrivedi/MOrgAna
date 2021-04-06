@@ -1,18 +1,18 @@
 import setuptools
 # from gastrseg.segm_app import __MAJOR__, __MINOR__, __MICRO__, __AUTHOR__, __VERSION__, __NAME__, __EMAIL__
 
-with open('README.md', 'r') as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='MOrgAna-testJL',
+    name='MOrgAna-testJL6',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
     description="A machine learning tool to segment organoids.",
-    long_description=long_description,
+    long_description= long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/LabTrivedi/MOrgAna',
     # package_data={'': ['*.md']}, # include all .md files
