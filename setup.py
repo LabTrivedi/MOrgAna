@@ -25,7 +25,7 @@ setuptools.setup(
         'Operating System :: OS Independent',
     ],
     package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    package=setuptools.find_packages(where="src"),
     install_requires=[
         # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
         # "Markdown",

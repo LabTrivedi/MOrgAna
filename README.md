@@ -1,5 +1,5 @@
 
-<img align="left" width="80" height="80" img src="morgana/Examples/app_screenshots/morgana_icon.png" alt="front_page">
+<img align="left" width="80" height="80" img src="src/morgana/Examples/app_screenshots/morgana_icon.png" alt="front_page">
 
 # MOrgAna
 
@@ -15,7 +15,7 @@ This software is able to A) generate binary masks of organoids based on their br
 To download the software, run `pip install morgana` in terminal (MacOS) or command prompt(windows) followed by the command `python -m morgana`
 
 <p align="center">
-	<img src="morgana/Examples/app_screenshots/front_page.png" alt="front_page" width="350"/>
+	<img src="src/morgana/Examples/app_screenshots/front_page.png" alt="front_page" width="350"/>
 </p>
 
 For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb'.
@@ -30,7 +30,7 @@ Each tif file in image folder should contain only one organoid with the brightfi
 2. Run the segmentation app. Click `Specify model folder` and select the `model` folder created. If binary masks are missing, please manually annotate for each image by clicking on the image in the pop up window to create a boundary around your object of interest or right click on red dots to remove selection. 
 
 <p align="center">
-<img src="morgana/Examples/app_screenshots/binary_mask.png" alt="binary_mask" width="400"/>
+<img src="src/morgana/Examples/app_screenshots/binary_mask.png" alt="binary_mask" width="400"/>
 </p>
 3. Select `Use Multi Layer Perceptrons` if Tensorflow and CUDA have been successfully installed and if you would like to use deep learning to generate additional binary masks. 
 
@@ -49,7 +49,7 @@ Each tif file in image folder should contain only one organoid with the brightfi
 6. Click on `Inspect masks`. This will generate a overview of binary masks overlayed with their respective brightfield images. The mask generated with the watershed algorithm is shown in blue while the red mask is generated with the classifier algorithm.
 
 <p align="center">
-<img src="morgana/Examples/app_screenshots/manual_selection_mask.png" alt="manual_selection_mask" width="800"/>
+<img src="src/morgana/Examples/app_screenshots/manual_selection_mask.png" alt="manual_selection_mask" width="800"/>
 </p>
 
 7. The other panel will allow the user to chose, for every image, the final mask type: 'ignore' (do not include selected image and mask), 'classifier' (red), 'watershed' (blue), 'manual' (manually create mask). Clicking `Show/Hide more parameters` will enable the user to change parameters such as downsampling, thinning and smoothing used in the generation of the final mask. Optional: select `Compute full meshgrid` to generate a meshgrid for straightening of organoid for later quantification. If disabled, meshgrid will automatically be generated later if required.
@@ -62,7 +62,7 @@ Each tif file in image folder should contain only one organoid with the brightfi
 1. If binary masks of all images have already been generated, select `Import external masks`. This will reveal a new page. This feature allows import of images with multiple objects of interest.
 
 <p align="center">
-<img src="morgana/Examples/app_screenshots/import_external_masks.png" alt="import_external_masks" width="350"/>
+<img src="src/morgana/Examples/app_screenshots/import_external_masks.png" alt="import_external_masks" width="350"/>
 </p>
 
 2. Specify image and mask folder with the `Specify image folder` and `Specify mask folder` buttons. Masks should be labeled as name of its respective image + file identifier. E.g. if the identifier is `_GT`: Image `20190509_01B_dmso.tif` and its mask `20190509_01B_dmso_GT.tif`.
@@ -76,14 +76,14 @@ Each tif file in image folder should contain only one organoid with the brightfi
 
 Click on the Quantification tab to enable morphological and fluorescence quantification with previously generated masks.
 <p align="center">
-<img src="morgana/Examples/app_screenshots/quantification_tab.png" alt="quantification_tab" width="350"/>
+<img src="src/morgana/Examples/app_screenshots/quantification_tab.png" alt="quantification_tab" width="350"/>
 </p>
 
 1. Using the `Select new dataset` button, import all image folders previously generated or imported in the `Generate or Import Masks` tab into the preferred groups. Each group can refer to one condition or one timepoint. For groups spanning multiple timepoints, users may select the `Timelapse data` option. More groups can be created by clicking `Add New Group` at the top. If there is only one group, `Groups` can be disabled at the top after selection of dataset.
 
 2. After importing all selected image folders, there are several options available below:
 <p align="center">
-<img src="morgana/Examples/app_screenshots/extended_quantification_tab.png" alt="extended_quantification_tab" width="350"/>
+<img src="src/morgana/Examples/app_screenshots/extended_quantification_tab.png" alt="extended_quantification_tab" width="350"/>
 </p>
 
 * `Visualization quantification`: creates an overview of all meshgrids and composite images
@@ -104,7 +104,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 	Clicking `Visualize Morphological Parameter (s)` will display one or more of the following windows:
 
 <p align="center">
-<img src="morgana/Examples/app_screenshots/area.png" alt="area" width="350"/>
+<img src="src/morgana/Examples/app_screenshots/area.png" alt="area" width="350"/>
 </p>
 
 	In this window, you can edit the quantification of morphological parameters by selecting the type of normalization and background subtraction. Users can also edit the graph shown by changing Pixel size/Scaler, Dimensionality, Plot type and Colormap with the options of removing groups, addition of legend or removal or raw data points on the graph. To view changes, click on `Apply Settings` after making the desired changes to options shown. `Compute statistics` shows P-values obtained from T-test, with the option of saving the p-values in a excel sheet. Users can also choose to save all resulting quantification values with the `Save Data as xlsx` button at the bottom. Square buttons at the top of the window can also be used to adjust the resulting graph with default options provided by matplotlib.
