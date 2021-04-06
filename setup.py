@@ -7,7 +7,7 @@ with open('README.md', 'r') as fh:
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='MOrgAna',
+    name='MOrgAna-testJL',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",

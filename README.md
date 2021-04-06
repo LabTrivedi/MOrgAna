@@ -1,5 +1,5 @@
 
-<img align="left" width="80" height="80" img src="src/morgana/Examples/app_screenshots/morgana_icon.png" alt="front_page">
+<img align="left" width="80" height="80" url="src/morgana/Examples/app_screenshots/morgana_icon.png" alt="morgana">
 
 # MOrgAna
 
@@ -112,7 +112,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 
 * `Fluorescence quantification`: Quantification of fluorescence in the chosen channel with respect to space with the selection of Antero-Posterior profile, Left-Right profile, Radial profile, Angular profile or simply with the average fluorescence intensity. `Compute graph` will display one such panel shown below:
 <p align="center">
-<img src="morgana/Examples/app_screenshots/APprofile.png" alt="APprofile" width="350"/>
+<img url="https://github.com/LabTrivedi/MOrgAna/blob/master/src/morgana/Examples/app_screenshots/APprofile.png" alt="APprofile" width="350"/>
 </p>
 Users can choose to adjust method of quantification by changing Background subtraction type, Y axis normalization or selection of X axis normalization. If a spatial profile was chosen, the orientation of the profile can be signal-based. Users can similarly edit the colours of the graph with the Colormap, edit the X and Y axis labels, choose not to plot unwanted groups, include legends or remove raw data points from the graph shown. After altering the options, click on `Apply Settings` to view the changes. Default options of graphs by matplotib can also be changed with the square buttons at the top of the window.
 
