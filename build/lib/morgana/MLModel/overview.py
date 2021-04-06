@@ -12,7 +12,7 @@ import multiprocessing
 from morgana.DatasetTools import io
 # from orgseg import ImageTools
 
-def generate_overview(input_folder, saveFig=True, fileName='', start=None, stop=None, downshape=1):#, fig=None, ax=None):
+def generate_overview(input_folder, saveFig=True, fileName='', start=None, stop=None, downshape=1):
     print('Generating recap image at',input_folder)
 
     flist_in = io.get_image_list(input_folder)
@@ -25,10 +25,6 @@ def generate_overview(input_folder, saveFig=True, fileName='', start=None, stop=
     flist_in = flist_in[start:stop]
     flist_ws = flist_ws[start:stop]
     flist_cl = flist_cl[start:stop]
-
-    # print(len(flist_in), len(flist_cl))
-    # print(flist_in)
-    # print(flist_cl)
 
     n_img = len(flist_in)
     ncols = 5
@@ -65,7 +61,6 @@ def generate_overview(input_folder, saveFig=True, fileName='', start=None, stop=
         watersheds[i] = imread(flist_ws[i])[::downshape,::downshape].astype(float)
 
     ### plotting
-    # if fig == None:
     fig,ax = plt.subplots(figsize=(3*ncols,3*nrows), nrows=nrows, ncols=ncols)
     ax = ax.flatten()
 

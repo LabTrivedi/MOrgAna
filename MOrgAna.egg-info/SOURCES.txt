@@ -7,7 +7,6 @@ MOrgAna.egg-info/requires.txt
 MOrgAna.egg-info/top_level.txt
 morgana/__init__.py
 morgana/__main__.py
-morgana/segm_app.py
 morgana/DatasetTools/__init__.py
 morgana/DatasetTools/arrangefluodata.py
 morgana/DatasetTools/arrangemorphodata.py
