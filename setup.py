@@ -1,30 +1,31 @@
 import setuptools
 # from gastrseg.segm_app import __MAJOR__, __MINOR__, __MICRO__, __AUTHOR__, __VERSION__, __NAME__, __EMAIL__
 
-# with open('README.md', 'r') as fh:
-#     long_description = fh.read()
+with open('README.md', 'r') as fh:
+    long_description = fh.read()
 
 # print(setuptools.find_packages())
 
 setuptools.setup(
     name='MOrgAna',
     version="0.1.0",
-    # author=__AUTHOR__,
-    # author_email=__EMAIL__,
-    description='A machine learning tool to segment organoids.',
-    # long_description=long_description,
-    # long_description_content_type='text/markdown',
-    # url='https://github.com/baigouy/EPySeg',
+    author="Nicola Gritti",
+    author_email="gritti@embl.es",
+    description="A machine learning tool to segment organoids.",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/LabTrivedi/MOrgAna',
     # package_data={'': ['*.md']}, # include all .md files
     # license='BSD',
     include_package_data=True,
     packages=setuptools.find_packages(),
-    # classifiers=[
-    #     'Programming Language :: Python :: 3',
-    #     'License :: OSI Approved :: BSD License',
-    #     'Operating System :: OS Independent',
-    # ],
-
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src"),
     install_requires=[
         # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
         # "Markdown",
