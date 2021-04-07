@@ -1,5 +1,4 @@
 import setuptools
-# from gastrseg.segm_app import __MAJOR__, __MINOR__, __MICRO__, __AUTHOR__, __VERSION__, __NAME__, __EMAIL__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -7,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='MOrgAna-test_final3',
+    name='MOrgAna',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
@@ -17,15 +16,14 @@ setuptools.setup(
     url='https://github.com/LabTrivedi/MOrgAna',
     # package_data={'': ['*.md']}, # include all .md files
     # license='BSD',
-    # include_package_data=True,
-    # packages=setuptools.find_packages(),
+    include_package_data=True,
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
     # package_dir={"": "src"},
-    # package=setuptools.find_packages(where="src"),
+    packages=setuptools.find_packages(),#where="src"),
     install_requires=[
         # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
         # "Markdown",
