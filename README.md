@@ -1,5 +1,4 @@
-
-![](https://github.com/LabTrivedi/MOrgAna/blob/master/src/morgana/Examples/app_screenshots/morgana_icon.png =80x80)
+<img align="left" width="80" height="80" src="https://github.com/LabTrivedi/MOrgAna/blob/master/src/morgana/Examples/app_screenshots/morgana_icon.png" alt="morgana">
 # MOrgAna
 
 Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids.
