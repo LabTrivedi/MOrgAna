@@ -1,5 +1,5 @@
 
-![](https://github.com/LabTrivedi/MOrgAna/blob/master/src/morgana/Examples/app_screenshots/morgana_icon.png){align="left" width="80" height="80"}
+![](https://github.com/LabTrivedi/MOrgAna/blob/master/src/morgana/Examples/app_screenshots/morgana_icon.png){:align="left" width="80" height="80"}
 
 # MOrgAna
 
