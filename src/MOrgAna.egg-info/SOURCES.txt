@@ -1,8 +1,0 @@
-README.md
-pyproject.toml
-setup.py
-src/MOrgAna.egg-info/PKG-INFO
-src/MOrgAna.egg-info/SOURCES.txt
-src/MOrgAna.egg-info/dependency_links.txt
-src/MOrgAna.egg-info/requires.txt
-src/MOrgAna.egg-info/top_level.txt

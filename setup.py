@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='MOrgAna-testJL6',
+    name='MOrgAna-test_final2',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
@@ -17,8 +17,8 @@ setuptools.setup(
     url='https://github.com/LabTrivedi/MOrgAna',
     # package_data={'': ['*.md']}, # include all .md files
     # license='BSD',
-    include_package_data=True,
-    packages=setuptools.find_packages(),
+    # include_package_data=True,
+    # packages=setuptools.find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
@@ -39,6 +39,6 @@ setuptools.setup(
     # extras_require = {
     #     'all':  ["tensorflow-gpu>=2.0.0"]
     # },
-    python_requires='>=3.6' # tensorflow is now supported by python 3.8
+    python_requires='>=3.6', # tensorflow is now supported by python 3.8
 )
 
