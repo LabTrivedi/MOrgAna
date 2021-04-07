@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='MOrgAna-test_final2',
+    name='MOrgAna-test_final3',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
@@ -24,8 +24,8 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    package_dir={"": "src"},
-    package=setuptools.find_packages(where="src"),
+    # package_dir={"": "src"},
+    # package=setuptools.find_packages(where="src"),
     install_requires=[
         # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
         # "Markdown",

@@ -1,0 +1,10 @@
+/Users/jialelim/opt/anaconda3/lib/python3.8/site-packages/MOrgAna_test_final3-0.1.0-py3.8.egg
+/Users/jialelim/opt/anaconda3/bin/tqdm
+/Users/jialelim/opt/anaconda3/bin/skivi
+/Users/jialelim/opt/anaconda3/bin/f2py
+/Users/jialelim/opt/anaconda3/bin/f2py3
+/Users/jialelim/opt/anaconda3/bin/f2py3.8
+/Users/jialelim/opt/anaconda3/bin/lsm2bin
+/Users/jialelim/opt/anaconda3/bin/tifffile
+/Users/jialelim/opt/anaconda3/bin/imageio_download_bin
+/Users/jialelim/opt/anaconda3/bin/imageio_remove_bin
