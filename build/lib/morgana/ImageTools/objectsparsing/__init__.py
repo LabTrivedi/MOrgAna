@@ -1,1 +1,0 @@
-import morgana.ImageTools.objectsparsing.objectsparser
