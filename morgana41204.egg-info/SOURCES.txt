@@ -3,6 +3,11 @@ pyproject.toml
 setup.py
 morgana/__init__.py
 morgana/__main__.py
+morgana41204.egg-info/PKG-INFO
+morgana41204.egg-info/SOURCES.txt
+morgana41204.egg-info/dependency_links.txt
+morgana41204.egg-info/requires.txt
+morgana41204.egg-info/top_level.txt
 morgana/DatasetTools/__init__.py
 morgana/DatasetTools/arrangefluodata.py
 morgana/DatasetTools/arrangemorphodata.py
@@ -62,8 +67,3 @@ morgana/MLModel/io.py
 morgana/MLModel/overview.py
 morgana/MLModel/predict.py
 morgana/MLModel/train.py
-morgana41204.egg-info/PKG-INFO
-morgana41204.egg-info/SOURCES.txt
-morgana41204.egg-info/dependency_links.txt
-morgana41204.egg-info/requires.txt
-morgana41204.egg-info/top_level.txt
