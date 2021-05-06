@@ -36,7 +36,7 @@ To run MOrgAna, run `python -m morgana` in terminal (MacOS) or command prompt(wi
 For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb'.
 
 ### A) Generate or Import Masks Tab
-Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif. Input tif files for MOrgAna can be generated with the use of the IJ macro `morgana/Examples/IJ_macro/transform_into_stacks.ijm`. Instructions for the use of the macro can be found in `morgana/Examples/IJ_macro/README_transform_into_stacks.txt`
+Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif. Input tif files for MOrgAna can be generated from individual tif images with the use of the IJ macro `morgana/Examples/IJ_macro/transform_into_stacks.ijm`. Instructions for the use of the macro can be found in `morgana/Examples/IJ_macro/README_transform_into_stacks.txt`
 
 #### Creating binary masks
 
