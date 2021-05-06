@@ -9,7 +9,7 @@ MOrgAna: accessible quantitative analysis of organoids with machine learning.
 
 ## Overview
 
-MOrgAna accepts images acquired by diverse devices such as high content screening devices, confocal microscopes and simple benchtop stereo-microscopes, trains a segmentation network based on a few manually created binary mask for the generation of addition masks of unseen images, and produces quantitative plots based on morphological and fluorescence parameters based on the input imagses and generated masks.
+MOrgAna accepts images acquired by diverse devices such as high content screening devices, confocal microscopes and simple benchtop stereo-microscopes, trains a segmentation network based on a few manually created binary mask for the generation of addition masks of unseen images, and produces quantitative plots based on morphological and fluorescence parameters based on the input images and generated masks.
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/Fig1.png" alt="overview" width="800"/>
@@ -52,12 +52,12 @@ Each tif file in image folder should contain only one organoid with the brightfi
 
 Users can choose to adjust the following parameters of the model by clicking `Show/Hide params`
 
-	* Sigmas: length scales (in pixels) used to generate the gaussian blurs of the input image
-	* Downscaling: number of pixels used to resize the input image. This is mainly done to reduce  computation time, and a value of 500 is found to be enough in most applications.
-	* Edge size: number of pixels used on the border of the mask to generate the edge of the organoid.
-	* Pixel% extraction: percentage of pixels of the input image to be considered. 0: no pixels, 1: all pixels
-	* Extraction bias: percentage of pixels extracted from the bright region of the mask. This parameter is useful when inputted gastruloids are particularly small and there is a huge bias in extracting background pixels.
-	* Features: 'ilastik' or 'daisy'. In addition to the ilastik features (gaussian blur, laplacian of gaussian, difference of gaussian and gradient), daisy will compute many texture features from the inptu image. This gives more features to train on, but will slow down the training and prediction of new masks.
+* Sigmas: length scales (in pixels) used to generate the gaussian blurs of the input image
+* Downscaling: number of pixels used to resize the input image. This is mainly done to reduce  computation time, and a value of 500 is found to be enough in most applications.
+* Edge size: number of pixels used on the border of the mask to generate the edge of the organoid.
+* Pixel% extraction: percentage of pixels of the input image to be considered. 0: no pixels, 1: all pixels
+* Extraction bias: percentage of pixels extracted from the bright region of the mask. This parameter is useful when inputted gastruloids are particularly small and there is a huge bias in extracting background pixels.
+* Features: 'ilastik' or 'daisy'. In addition to the ilastik features (gaussian blur, laplacian of gaussian, difference of gaussian and gradient), daisy will compute many texture features from the inptu image. This gives more features to train on, but will slow down the training and prediction of new masks.
 
 4. Once done, hit the `Train model` button. This may take some time :coffee:. Once completed, the message `##### Model saved!` will be seen on the terminal(MacOS) or command prompt(windows). If a model has previously been generated, select the model folder and the user can skip step 3 & 4 and jump to step 5. For models trained with Multi Layer Perceptrons, tick the option before selection of model folder.
 
