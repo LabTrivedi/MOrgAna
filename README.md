@@ -33,10 +33,10 @@ To run MOrgAna, run `python -m morgana` in terminal (MacOS) or command prompt(wi
 	<img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/front_page.png" alt="front_page" width="350"/>
 </p>
 
-For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb'.
+For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb`.
 
 ### A) Generate or Import Masks Tab
-Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif. Input tif files for MOrgAna can be generated from individual tif images with the use of the IJ macro `morgana/Examples/IJ_macro/transform_into_stacks.ijm`. Instructions for the use of the macro can be found in `morgana/Examples/IJ_macro/README_transform_into_stacks.txt`
+Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif. Input tif files for MOrgAna can be generated from individual tif images with the use of the IJ macro `morgana/Examples/IJ_macro/transform_into_stacks.ijm`. Instructions for the use of the macro can be found in `morgana/Examples/IJ_macro/README_transform_into_stacks.txt`.
 
 #### Creating binary masks
 
@@ -105,7 +105,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 
 * `Visualization quantification`: creates an overview of all meshgrids and composite images
 
-* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline). For more information on parameters, refer to [scikit-image](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) or [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe)
+* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline). For more information on parameters, refer to [scikit-image](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) or [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe).
 	* area
 	* eccentricity: ratio of the focal distance over the major axis length; value of 0 as shape approaches a circle. 
 	* major_axis_length
