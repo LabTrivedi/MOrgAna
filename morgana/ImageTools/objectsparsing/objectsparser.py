@@ -1,8 +1,11 @@
 import os, glob, sys
 import numpy as np
 from skimage.io import imread, imsave
-from scipy.ndimage import label, binary_dilation
+# from scipy.ndimage import label, binary_dilation
+from scipy.ndimage import binary_dilation
 from skimage import measure
+from skimage.measure import label
+
 
 if __name__ == '__main__':
     import sys, os
@@ -84,7 +87,7 @@ def parsing_images(image_folder, mask_folder, identifier_string, objects_at_bord
         region_counter = 0
         
         # label mask
-        labeled_mask, num_features = label(mask_to_crop[i])
+        labeled_mask, num_features = label(mask_to_crop[i], return_num=True)
         
         # for saving of cropped regions
         parent, filename = os.path.split(flist_in[i])
@@ -136,10 +139,10 @@ def parsing_images(image_folder, mask_folder, identifier_string, objects_at_bord
     ioSeg.save_segmentation_params(masks_output_dir,
                             filenames, chosen_mask, down_shape, thinning, smoothing)
     # compute morphological information
-    props = computemorphology.compute_morphological_info(
-            images_output_dir, compute_meshgrid=False)
-    ioMorph.save_morpho_params(masks_output_dir, 'splitObjects', props)
-    print('I am done! :D ')
+    # props = computemorphology.compute_morphological_info(
+    #         images_output_dir, compute_meshgrid=False)
+    # ioMorph.save_morpho_params(masks_output_dir, 'splitObjects', props)
+    print('Done!')
     return
 
 if __name__ == '__main__':
