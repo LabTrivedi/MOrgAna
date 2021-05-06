@@ -3,6 +3,7 @@
 # MOrgAna
 
 Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids, as described in the paper: 
+
 Nicola Gritti, Jia Le Lim, Kerim Anlaş, David Oriola, Mallica Pandya, Germaine Aalderink, Guillermo Martinez Ara, Vikas Trivedi.
 MOrgAna: accessible quantitative analysis of organoids with machine learning.
 
@@ -16,7 +17,7 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-MOrgAna requires Python 3.6 or new. Independent of your operating system/computer, the correct version of Python can be easily installed with [Anaconda](https://www.anaconda.com/products/individual). 
+MOrgAna requires Python 3.6 or newer. Independent of your operating system/computer, the correct version of Python can be easily installed with [Anaconda](https://www.anaconda.com/products/individual). 
 
 Optional: To use deep machine learning in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
 
@@ -35,7 +36,7 @@ To run MOrgAna, run `python -m morgana` in terminal (MacOS) or command prompt(wi
 For advance python users looking to analyse multiple image folders at once, please refer to the jupyter notebook `morgana/Examples/MOrgAna_workflow_for_advance_python_users.ipynb'.
 
 ### A) Generate or Import Masks Tab
-Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif.
+Each tif file in image folder should contain only one organoid with the brightfield channel as the starting image of each tif. Input tif files for MOrgAna can be generated with the use of the IJ macro `morgana/Examples/IJ_macro/transform_into_stacks.ijm`. Instructions for the use of the macro can be found in `morgana/Examples/IJ_macro/README_transform_into_stacks.txt`
 
 #### Creating binary masks
 
@@ -50,6 +51,7 @@ Each tif file in image folder should contain only one organoid with the brightfi
 3. Select `Use Multi Layer Perceptrons` if Tensorflow and CUDA have been successfully installed and if you would like to use deep learning to generate additional binary masks. 
 
 Users can choose to adjust the following parameters of the model by clicking `Show/Hide params`
+
 	* Sigmas: length scales (in pixels) used to generate the gaussian blurs of the input image
 	* Downscaling: number of pixels used to resize the input image. This is mainly done to reduce  computation time, and a value of 500 is found to be enough in most applications.
 	* Edge size: number of pixels used on the border of the mask to generate the edge of the organoid.
@@ -80,7 +82,7 @@ Users can choose to adjust the following parameters of the model by clicking `Sh
 <img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/import_external_masks.png" alt="import_external_masks" width="350"/>
 </p>
 
-2. Specify image and mask folder with the `Specify image folder` and `Specify mask folder` buttons. Masks should be labeled as name of its respective image + file identifier. E.g. if the identifier is `_GT`: Image `20190509_01B_dmso.tif` and its mask `20190509_01B_dmso_GT.tif`.
+2. Specify image and mask folder with the `Specify image folder` and `Specify mask folder` buttons. Masks should be labeled as name of its respective image + file identifier. E.g. if the identifier is `_GT`: Image `20190509_01B_dmso.tif` and its mask `20190509_01B_dmso_GT.tif`. Please ensure that masks and images are in different folders.
 
 3. Select `Include objects at border of images` if all partial images at edges of images are to be included. 
 
@@ -103,7 +105,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 
 * `Visualization quantification`: creates an overview of all meshgrids and composite images
 
-* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline). For more information on parameters, refer to [scikit-image](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) or [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe))
+* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline). For more information on parameters, refer to [scikit-image](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) or [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe)
 	* area
 	* eccentricity: ratio of the focal distance over the major axis length; value of 0 as shape approaches a circle. 
 	* major_axis_length

@@ -6,7 +6,6 @@ First Window -> select the transform_into_stacks_v6.ijm
 Second Window -> select the folder of tif images
 
 INPUT: folder of tif images of different channels and different conditions
-conditions must be a factor of 12 (1, 2, 3, 4, 6, 12)
 
 Images when sorted in the folder should have the following order:
 A1 - channel1
