@@ -2,16 +2,31 @@
 
 # MOrgAna
 
-Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids.
+Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids, as described in the paper: 
+Nicola Gritti, Jia Le Lim, Kerim Anlaş, David Oriola, Mallica Pandya, Germaine Aalderink, Guillermo Martinez Ara, Vikas Trivedi.
+MOrgAna: accessible quantitative analysis of organoids with machine learning.
 
-Optional: To use deep machine learning in generation of masks, please install the correct version of TensorFlow and cuDNN for your system:
-https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installwindows
+## Overview
+
+MOrgAna accepts images acquired by diverse devices such as high content screening devices, confocal microscopes and simple benchtop stereo-microscopes, trains a segmentation network based on a few manually created binary mask for the generation of addition masks of unseen images, and produces quantitative plots based on morphological and fluorescence parameters based on the input imagses and generated masks.
+
+<p align="center">
+	<img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/Fig1.png" alt="overview" width="800"/>
+</p>
+
+## Installation
+
+MOrgAna requires Python 3.6 or new. Independent of your operating system/computer, the correct version of Python can be easily installed with [Anaconda](https://www.anaconda.com/products/individual). 
+
+Optional: To use deep machine learning in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
+
+To download the software, run `pip install morgana` in terminal (MacOS) or command prompt(windows).
 
 ## Using the software
 
 This software is able to A) generate binary masks of organoids based on their bright-field images and with this mask, extract morphological information, generate a midline and a meshgrid. B) Provide analysis of fluorescence signals along the generated midline and enable quick and easy visual comparisons between conditions.
 
-To download the software, run `pip install morgana` in terminal (MacOS) or command prompt(windows) followed by the command `python -m morgana`
+To run MOrgAna, run `python -m morgana` in terminal (MacOS) or command prompt(windows).
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/front_page.png" alt="front_page" width="350"/>
@@ -31,9 +46,10 @@ Each tif file in image folder should contain only one organoid with the brightfi
 <p align="center">
 <img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/binary_mask.png" alt="binary_mask" width="400"/>
 </p>
+
 3. Select `Use Multi Layer Perceptrons` if Tensorflow and CUDA have been successfully installed and if you would like to use deep learning to generate additional binary masks. 
 
-	Users can choose to adjust the following parameters of the model by clicking `Show/Hide params`
+Users can choose to adjust the following parameters of the model by clicking `Show/Hide params`
 	* Sigmas: length scales (in pixels) used to generate the gaussian blurs of the input image
 	* Downscaling: number of pixels used to resize the input image. This is mainly done to reduce  computation time, and a value of 500 is found to be enough in most applications.
 	* Edge size: number of pixels used on the border of the mask to generate the edge of the organoid.
@@ -87,17 +103,17 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 
 * `Visualization quantification`: creates an overview of all meshgrids and composite images
 
-* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline)
+* `Morphology quantification`: Analysis of the following morphological parameters calculated using the unprocessed mask (without straightening) or the straighted mask (straighted using the generated midline). For more information on parameters, refer to [scikit-image](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) or [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe))
 	* area
-	* eccentricity
+	* eccentricity: ratio of the focal distance over the major axis length; value of 0 as shape approaches a circle. 
 	* major_axis_length
 	* minor_axis_length
-	* equivalent_diameter
+	* equivalent_diameter: diameter of a circle with the same area as the region.
 	* perimeter
 	* euler_number
 	* extent
 	* orientation
-	* locoefa_coeff (indication of complexity of shape)
+	* locoefa_coeff (indication of complexity of shape; refer to [Sánchez-Corrales, Y. E. et al. (2018)](https://journals.biologists.com/dev/article/145/6/dev156778/48888/Morphometrics-of-complex-cell-shapes-lobe))
 	* `Use all parameters`: will display 10 graphs, each a quantification of the above parameters.
 	
 	Clicking `Visualize Morphological Parameter (s)` will display one or more of the following windows:
@@ -106,7 +122,7 @@ Click on the Quantification tab to enable morphological and fluorescence quantif
 <img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/area.png" alt="area" width="350"/>
 </p>
 
-	In this window, you can edit the quantification of morphological parameters by selecting the type of normalization and background subtraction. Users can also edit the graph shown by changing Pixel size/Scaler, Dimensionality, Plot type and Colormap with the options of removing groups, addition of legend or removal or raw data points on the graph. To view changes, click on `Apply Settings` after making the desired changes to options shown. `Compute statistics` shows P-values obtained from T-test, with the option of saving the p-values in a excel sheet. Users can also choose to save all resulting quantification values with the `Save Data as xlsx` button at the bottom. Square buttons at the top of the window can also be used to adjust the resulting graph with default options provided by matplotlib.
+In this window, you can edit the quantification of morphological parameters by selecting the type of normalization and background subtraction. Users can also edit the graph shown by changing Pixel size/Scaler, Dimensionality, Plot type and Colormap with the options of removing groups, addition of legend or removal or raw data points on the graph. To view changes, click on `Apply Settings` after making the desired changes to options shown. `Compute statistics` shows P-values obtained from T-test, with the option of saving the p-values in a excel sheet. Users can also choose to save all resulting quantification values with the `Save Data as xlsx` button at the bottom. Square buttons at the top of the window can also be used to adjust the resulting graph with default options provided by matplotlib.
 
 
 * `Fluorescence quantification`: Quantification of fluorescence in the chosen channel with respect to space with the selection of Antero-Posterior profile, Left-Right profile, Radial profile, Angular profile or simply with the average fluorescence intensity. `Compute graph` will display one such panel shown below:
