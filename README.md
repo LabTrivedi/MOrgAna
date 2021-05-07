@@ -4,7 +4,7 @@
 
 Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and analyse 2D multi-channel images of organoids, as described in the paper: 
 
-Nicola Gritti, Jia Le Lim, Kerim Anlaş, David Oriola, Mallica Pandya, Germaine Aalderink, Guillermo Martinez Ara, Vikas Trivedi.
+*Nicola Gritti, Jia Le Lim, Kerim Anlaş, David Oriola, Mallica Pandya, Germaine Aalderink, Guillermo Martinez Ara, Vikas Trivedi.*
 MOrgAna: accessible quantitative analysis of organoids with machine learning.
 
 ## Overview
@@ -17,7 +17,11 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-MOrgAna requires Python 3.6 or newer. Independent of your operating system/computer, the correct version of Python can be easily installed with [Anaconda](https://www.anaconda.com/products/individual). 
+The MOrgAna software has been tested with Python 3.6 and above. To install Python, we recommend using the software [Anaconda](https://www.anaconda.com/products/individual). Anaconda provides a Python distribution for Windows, Linux, and MacOS, and contains most of the pacakges used by MOrgAna. 
+
+Users can also choose to create a Conda environment using the `environment_morgana.yml` file found in the repository:`morgana/environment_morgana.yml`. To create the environment and activate it, set working directory in the MOrgAna folder and run the command `conda env create -f environment_morgana.yml` in terminal (MacOS) or command prompt(windows).
+
+If problems were encountered due to package incompatibility, we recommend the use of conda or pip to perform an update of the python package.
 
 Optional: To use deep machine learning in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
 
