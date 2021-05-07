@@ -28,14 +28,14 @@ setuptools.setup(
         # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
         # "Markdown",
         "matplotlib",
-        "numpy",
+        "numpy>=1.20",
         # "PyQt5",
-        "scikit-image",
-        "pandas",
-        "joblib",
-        "scikit-learn",
-        "scipy",
-        "tqdm",
+        "scikit-image>=0.18",
+        "pandas>=1.2",
+        "joblib>=1.0",
+        "scikit-learn>=0.24",
+        "scipy>=1.6",
+        "tqdm>=4.60",
     ],
     # extras_require = {
     #     'all':  ["tensorflow-gpu>=2.0.0"]
