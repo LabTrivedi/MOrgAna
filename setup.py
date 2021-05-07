@@ -41,5 +41,6 @@ setuptools.setup(
     #     'all':  ["tensorflow-gpu>=2.0.0"]
     # },
     python_requires='>=3.6', # tensorflow is now supported by python 3.8
+    zip_safe=False 
 )
 
