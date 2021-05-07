@@ -1,8 +1,0 @@
-matplotlib
-numpy
-scikit-image
-pandas
-joblib
-scikit-learn
-scipy
-tqdm

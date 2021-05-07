@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # print(setuptools.find_packages())
 
 setuptools.setup(
-    name='morgana41204',
+    name='morgana',
     version="0.1.0",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
