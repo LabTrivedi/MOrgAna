@@ -1,7 +1,5 @@
 name: morgana
 channels:
-  - bioconda
-  - r
   - conda-forge
   - defaults
 dependencies:
@@ -152,4 +150,4 @@ dependencies:
     - pyqt5-qt5==5.15.2
     - pyqt5-sip==12.8.1
     - tqdm==4.60.0
-prefix: C:\Users\nicol\anaconda3\envs\morgana
+
