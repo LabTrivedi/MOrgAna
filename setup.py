@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='morgana',
-    version="0.1.0",
+    version="0.1.1",
     author="Nicola Gritti",
     author_email="gritti@embl.es",
     description="A machine learning tool to segment organoids.",
