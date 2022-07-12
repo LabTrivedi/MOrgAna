@@ -6,7 +6,7 @@ Welcome to MOrgAna (Machine-learning based Organoids Analysis) to segment and an
 
 *Nicola Gritti, Jia Le Lim, Kerim Anlaş, David Oriola, Mallica Pandya, Germaine Aalderink, Guillermo Martinez Ara, Vikas Trivedi.*
 MOrgAna: accessible quantitative analysis of organoids with machine learning.
-Development (2021) 148 (18): dev199611.
+*Development* (2021) 148 (18): dev199611.
 https://doi.org/10.1242/dev.199611
 
 ## Overview
