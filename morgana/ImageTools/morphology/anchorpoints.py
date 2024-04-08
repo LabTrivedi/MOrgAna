@@ -97,12 +97,12 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
         # plt.close(fig)
 
     ### rescale midline coordinates back to original shape
-    midlinePoints = (midlinePoints/down_shape).astype(np.float)
+    midlinePoints = (midlinePoints/down_shape).astype(np.float64)
     if midlinePoints.shape[0]==1:
         # midline = np.where(a)
         midlinePoints = np.array([[midlinePoints[0][0]-1,midlinePoints[0][1]+1],[midlinePoints[1][0]-1,midlinePoints[1][1]+1]])
         midlinePoints = np.transpose(midlinePoints)
-    key_points = (np.array([k[0] for k in key_points])/down_shape).astype(np.float)
+    key_points = (np.array([k[0] for k in key_points])/down_shape).astype(np.float64)
 
     ### order midline points from one end to another
     points = [np.array(key_points[0])]
@@ -115,10 +115,10 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
         idx = np.where(dist==np.min(dist))[0]
         points.append(remaining[idx][0])
         remaining = np.delete(remaining,idx,0)
-    anchors = np.array(points).astype(np.float)
+    anchors = np.array(points).astype(np.float64)
 
     ### find edge point to the left
-    tg = np.array([0,0]).astype(np.float)
+    tg = np.array([0,0]).astype(np.float64)
     n = np.clip(5,0,anchors.shape[0])
     for i in range(1,n):
         tg += (anchors[0]-anchors[i])/np.sqrt(np.sum((anchors[0]-anchors[i])**2))
@@ -131,7 +131,7 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
         edge_point_L = edge_point_L + tg
 
     ### find edge point to the right
-    tg = np.array([0,0]).astype(np.float)
+    tg = np.array([0,0]).astype(np.float64)
     for i in range(1,n):
         tg += (anchors[::-1][0]-anchors[::-1][i])/(np.sqrt(np.sum((anchors[::-1][0]-anchors[::-1][i])**2)))
     tg = tg/5
@@ -152,7 +152,7 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
     # print(int(edge_dist*down_shape/2))
     # print(anchors.shape)
     s = np.max([int(edge_dist*down_shape/2),1])
-    anch = np.concatenate((np.array([edge_point_L]),anchors[::s],np.array([edge_point_R])), axis=0).astype(np.float)
+    anch = np.concatenate((np.array([edge_point_L]),anchors[::s],np.array([edge_point_R])), axis=0).astype(np.float64)
 
     # # plot the result
     # fig, ax = plt.subplots(1, 1)
