@@ -29,18 +29,18 @@ setuptools.setup(
         # "Markdown",
         "matplotlib",
         "numpy==1.20",
-        "PyQt5",
-        "scikit-image>=0.18",
+        # "PyQt5",
+        "scikit-image==0.18",
         "pandas==1.2",
-        "joblib>=1.0",
-        "scikit-learn>=0.24",
-        "scipy>=1.6",
-        "tqdm>=4.60",
+        "joblib==1.0",
+        "scikit-learn==0.24",
+        "scipy==1.6",
+        "tqdm==4.60",
     ],
     # extras_require = {
     #     'all':  ["tensorflow-gpu>=2.0.0"]
     # },
-    python_requires='>=3.6', # tensorflow is now supported by python 3.8
+    python_requires='==3.9', # tensorflow is now supported by python 3.8
     zip_safe=False 
 )
 
