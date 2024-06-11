@@ -23,12 +23,12 @@ def compute_fluorescence_info( image, mask, f_in, f_ma, prop, parent_folder = ''
             image = np.expand_dims(image,0)
         if image.shape[-1] == np.min(image.shape):
             image = np.moveaxis(image, -1, 0)
-        image = np.stack([ img[prop['slice']].astype(np.float) for img in image ])
+        image = np.stack([ img[prop['slice']].astype(float) for img in image ])
 
     if mask is None:
         # load mask
         path_to_mask = os.path.join(parent_folder,f_ma)
-        mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+        mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
 
     # make sure the input image is a 3D numpy array even if it has only one channel
     N_ch = image.shape[0]
@@ -104,9 +104,9 @@ if __name__ == '__main__':
     # load input image and mask
     path_to_mask = os.path.join(input_folder,f_ma)
     path_to_file = os.path.join(input_folder,f_in)
-    mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+    mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
     image = imread(path_to_file)
-    image = np.stack([ img[prop['slice']].astype(np.float) for img in image ])
+    image = np.stack([ img[prop['slice']].astype(float) for img in image ])
 
     # make sure the input image is a 3D numpy array even if it has only one channel
     if image.ndim == 2:

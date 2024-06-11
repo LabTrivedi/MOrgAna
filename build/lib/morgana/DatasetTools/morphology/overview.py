@@ -93,7 +93,7 @@ def generate_overview_finalMask(input_folder, chosen, saveFig=True, downshape=1,
         print('### Saving image...')
         # save figure
         _, cond = os.path.split(input_folder)
-        fig.savefig(os.path.join(input_folder, 'result_segmentation', cond+'_finalMasks.png'), dpi=300)
+        fig.savefig(os.path.join(input_folder, 'result_segmentation', cond+'_finalMasks.png'), dpi=75)
         print('### Done saving!')
 
     return fig
@@ -244,7 +244,7 @@ def generate_composite_img_cropped(input_folder, downshape=1, keep_open=True):
     print('### Saving image...')
     # save figure
     _, cond = os.path.split(input_folder)
-    fig.savefig(os.path.join(segment_folder,cond+'_composite_recap.png'), dpi=300)
+    fig.savefig(os.path.join(segment_folder,cond+'_composite_recap.png'), dpi=75)
     if not keep_open:
         plt.close(fig)
     print('### Done saving!')
@@ -316,7 +316,7 @@ def generate_meshgrid_img_cropped(input_folder, keep_open = True):
         
     print('### Saving image...')
     # save figure
-    fig.savefig(os.path.join(segment_folder, cond+'_meshgrid_recap.png'), dpi=300)
+    fig.savefig(os.path.join(segment_folder, cond+'_meshgrid_recap.png'), dpi=75)
     if not keep_open:
         plt.close(fig)
     print('### Done saving!')

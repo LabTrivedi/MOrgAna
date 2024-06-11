@@ -5,7 +5,7 @@ from skimage.feature import daisy
 def get_features(_input, sigmas, feature_mode='ilastik', 
                         radius=10, rings=5, histograms=8, orientations=8):
     # normalize image between 0 and 1
-    _input = _input.astype(np.float64) 
+    _input = _input.astype(float) 
     # percs = np.percentile(_input,q=(.03,99.997))
     # _input = np.clip(_input,percs[0],percs[1])
     # _input = (_input-percs[0])/(percs[1]-percs[0])

@@ -297,7 +297,7 @@ def generate_meshgrid_img_cropped(input_folder, keep_open = True):
         if bf.shape[-1] == np.min(bf.shape):
             bf = np.moveaxis(bf,-1,0)
         bf = bf[0][prop['slice']]
-        ma = img_as_bool( imread(flist_ma[i])[prop['slice']].astype(np.float) )
+        ma = img_as_bool( imread(flist_ma[i])[prop['slice']].astype(float) )
 
         meshgrid.visualize_meshgrid(midline,tangent,mesh,bf,color='white', ax=ax[i])
         

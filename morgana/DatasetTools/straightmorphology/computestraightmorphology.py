@@ -69,7 +69,7 @@ def compute_straight_morphological_info(input_folder, compute_locoefa = True,):
 
             # load mask
             path_to_mask = os.path.join(input_folder,f_ma)
-            mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+            mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
 
             row = computestraightmorphology.compute_straight_morphological_info(mask, f_in, f_ma, down_shape[i], prop, compute_locoefa=compute_locoefa)
             
