@@ -29,7 +29,7 @@ setuptools.setup(
         # "Markdown",
         "matplotlib",
         "numpy==1.20",
-        # "PyQt5",
+        "PyQt5",
         "scikit-image>=0.18",
         "pandas==1.2",
         "joblib>=1.0",

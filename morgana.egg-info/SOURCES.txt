@@ -8,8 +8,6 @@ setup.py
 benchmarking/morgana_benchmarking.py
 benchmarking/CellProfiler/project.cpproj
 benchmarking/OrganoSeg/clean_up_masks.py
-dist/morgana-0.1.0-py3-none-any.whl
-dist/morgana-0.1.0.tar.gz
 morgana/.DS_Store
 morgana/__init__.py
 morgana/__main__.py
