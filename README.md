@@ -29,7 +29,7 @@ Alternatively, users can create a fresh environment with `conda create -n morgan
 
 ### Installation
 
-Download the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py1`), and run `python install .`.
+Download the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py`), and run `python install .`.
 
 #### Alternative:
 To install pip version of MOrgAna, run `pip install morgana` in terminal (MacOS) or command prompt(windows).
