@@ -111,7 +111,7 @@ if __name__ == '__main__':
     width = prop['meshgrid_width']
     mesh = prop['meshgrid']
     if mesh == None:
-        mesh = ImageTools.morphology.meshgrid.compute_meshgrid(
+        mesh = meshgrid.compute_meshgrid(
                                                                     midline,
                                                                     tangent,
                                                                     width
@@ -133,5 +133,5 @@ if __name__ == '__main__':
     dict_['input_file'] = os.path.split(f_in)[1]
     dict_['mask_file'] = os.path.join('result_segmentation', os.path.split(f_ma)[1] )
     print(np.max(ma_straight.astype(float)))
-    dict_['locoefa_coeff'] = ImageTools.locoefa.computecoeff.compute_LOCOEFA_Lcoeff(ma_straight, down_shape[i]).locoefa_coeff.values
+    dict_['locoefa_coeff'] = computecoeff.compute_LOCOEFA_Lcoeff(ma_straight, down_shape[i]).locoefa_coeff.values
 

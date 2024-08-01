@@ -10,8 +10,11 @@ def read_example_data(fname, N_modes=50):
     contour = pd.read_csv(fname)
     if contour.x.values[-1] != contour.x.values[0]:
 #        print('Appending first element to make it a close curve')
-        newrow = pd.Series({'x': contour.x[0], 'y': contour.y[0]})
-        contour.append(newrow)
+        new_x = list(contour.x.values).append(contour.x[0])
+        new_y = list(contour.y.values).append(contour.y[0])
+        # newrow = pd.Series({'x': contour.x[0], 'y': contour.y[0]})
+        
+        contour = pd.DataFrame({"x": new_x, "y": new_y})
 
     initialize_values = [0. for i in range(len(contour.x))]
     variables = ['deltax',  'deltay',       'deltat',       't',
