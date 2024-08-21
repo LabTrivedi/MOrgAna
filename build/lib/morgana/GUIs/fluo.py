@@ -527,7 +527,7 @@ class profileAP_tlMode(QWidget):
                 # plot the raw data if the button is checked
                 # if self.rawBtn.isChecked():
                 #     ax.plot(data_group[-1],'-', lw=.5, c=self.colors[i], alpha = 0.2)
-        data_mean = data_mean.astype(np.float)/data_count.astype(np.float)
+        data_mean = data_mean.astype(float)/data_count.astype(float)
         data_mean = np.nan_to_num(data_mean)
 
         aspect = 'auto'

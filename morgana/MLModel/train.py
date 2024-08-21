@@ -110,7 +110,7 @@ def train_classifier( X, Y, w, deep=False, epochs=50, n_classes = 3, hidden=(350
         print('Training of MLP classifier...')
         from tensorflow.keras import layers
         from tensorflow import keras
-        Y = keras.utils.to_categorical(Y, num_classes=n_classes, dtype='int')
+        Y = keras.utils.to_categorical(Y, num_classes=n_classes)
 
         # Create the model
         # Define Sequential model with 3 layers

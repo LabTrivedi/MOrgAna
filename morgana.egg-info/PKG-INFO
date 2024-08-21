@@ -8,17 +8,19 @@ Author-email: gritti@embl.es
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.6
+Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: tensorflow>=2.10
 Requires-Dist: matplotlib
-Requires-Dist: numpy==1.20
-Requires-Dist: scikit-image==0.18
-Requires-Dist: pandas==1.2
-Requires-Dist: joblib==1.0
-Requires-Dist: scikit-learn==0.24
-Requires-Dist: scipy==1.6
-Requires-Dist: tqdm==4.60
+Requires-Dist: numpy>=1.20
+Requires-Dist: pyqt5
+Requires-Dist: scikit-image>=0.18
+Requires-Dist: pandas>=1.2
+Requires-Dist: joblib>=1.0
+Requires-Dist: scikit-learn>=0.24
+Requires-Dist: scipy>=1.6
+Requires-Dist: tqdm>=4.60
 
 <img align="left" width="80" height="80" src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/morgana_icon.png" alt="morgana">
 
@@ -41,7 +43,7 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-The MOrgAna software has been tested with Python 3.6 and above. To install Python, we recommend using the software [Anaconda](https://www.anaconda.com/products/individual). Anaconda provides a Python distribution for Windows, Linux, and MacOS, and contains most of the pacakges used by MOrgAna. 
+The MOrgAna software has been tested with Python 3.9 and above. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
 
 ### Environment setup
 

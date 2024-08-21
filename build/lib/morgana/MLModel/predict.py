@@ -25,7 +25,7 @@ def create_features(_input, scaler,
 
     # resize to new shape
     start = time.time()   
-    _input = transform.resize(_input.astype(np.float), shape, preserve_range=True)
+    _input = transform.resize(_input.astype(float), shape, preserve_range=True)
     if check_time:
         print(time.time()-start)
 

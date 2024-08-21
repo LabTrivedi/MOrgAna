@@ -68,7 +68,7 @@ class spotWindow(QDialog):
         props = {key:props[key][0] for key in props}
         mask_file = props['mask_file']
         path_to_mask = os.path.join(input_folder,mask_file)
-        self.mask = imread(path_to_mask)[props['slice']].astype(np.float)
+        self.mask = imread(path_to_mask)[props['slice']].astype(float)
         input_file = props['input_file']
         path_to_file = os.path.join(input_folder,input_file)
         self.img = imread(path_to_file).astype(float)

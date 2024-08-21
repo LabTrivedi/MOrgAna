@@ -27,9 +27,9 @@ def generate_training_set( _input, gt,
     ### read in kwargs
     if down_shape != -1:
         ### reshape input and ground truth
-        _input = [i.astype(np.float) for i in _input]
+        _input = [i.astype(float) for i in _input]
         _input = [ transform.resize(i, (int(i.shape[0]*down_shape),int(i.shape[1]*down_shape)) , preserve_range=True) for i in _input ]
-        gt = [i.astype(np.float) for i in gt]
+        gt = [i.astype(float) for i in gt]
         gt = [ transform.resize(i, (int(i.shape[0]*down_shape),int(i.shape[1]*down_shape)), order=0, preserve_range=False) for i in gt ]
     shapes = [i.shape for i in _input]
 
@@ -71,7 +71,7 @@ def generate_training_set( _input, gt,
 
         # extract coordinates with the right probability distribution
         if (bias>0) and (bias<=1):
-            prob = (Y>0).astype(np.float64)
+            prob = (Y>0).astype(float)
             Nw = np.sum(prob)
             Nd = np.prod(prob.shape)-Nw
             probW = bias*prob/Nw
@@ -110,7 +110,7 @@ def train_classifier( X, Y, w, deep=False, epochs=50, n_classes = 3, hidden=(350
         print('Training of MLP classifier...')
         from tensorflow.keras import layers
         from tensorflow import keras
-        Y = keras.utils.to_categorical(Y, num_classes=n_classes, dtype='int')
+        Y = keras.utils.to_categorical(Y, num_classes=n_classes)
 
         # Create the model
         # Define Sequential model with 3 layers

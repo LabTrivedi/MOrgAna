@@ -25,7 +25,7 @@ def save_model( model_folder, classifier, scaler,
     if not deep:
         joblib.dump(classifier, os.path.join(model_folder,'classifier.pkl'))
     else:
-        classifier.save(os.path.join(model_folder))
+        classifier.save(os.path.join(model_folder, "classifier.keras"))
     
     joblib.dump(scaler, os.path.join(model_folder,'scaler.pkl'))
     
@@ -57,7 +57,7 @@ def load_model( model_folder, deep=False ):
     else:
         from tensorflow import keras
         try:
-            classifier = keras.models.load_model(os.path.join(model_folder))
+            classifier = keras.models.load_model(os.path.join(model_folder, "classifier.keras"))
         except:
             return None, None, None
 

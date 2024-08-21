@@ -85,7 +85,8 @@ def collect_fluo_data(groups, channel, distType, isTimelapse=False):
                 rows = data
 
             # concatenate to existing dataframe
-            data_all[i] = data_all[i].append(rows, ignore_index=True)
+            data_all[i] = pd.concat([data_all[i], rows], ignore_index=True)  
+            # data_all[i] = data_all[i].append(rows, ignore_index=True)
 
     return data_all
 

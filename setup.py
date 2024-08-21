@@ -25,22 +25,22 @@ setuptools.setup(
     # package_dir={"": "src"},
     packages=setuptools.find_packages(),#where="src"),
     install_requires=[
-        # "tensorflow>=2.4",  # to allow for mac OS X conda support #shall I put 2.3 now
+        "tensorflow>=2.10",  # to allow for mac OS X conda support #shall I put 2.3 now, on Windows, 2.10 is the last having gpu support
         # "Markdown",
         "matplotlib",
-        "numpy==1.20",
-        # "PyQt5",
+        "numpy>=1.20",
+        "pyqt5",
         "scikit-image==0.18",
-        "pandas==1.2",
-        "joblib==1.0",
-        "scikit-learn==0.24",
-        "scipy==1.6",
-        "tqdm==4.60",
+        "pandas>=1.2",
+        "joblib>=1.0",
+        "scikit-learn>=0.24",
+        "scipy>=1.6",
+        "tqdm>=4.60",
     ],
     # extras_require = {
     #     'all':  ["tensorflow-gpu>=2.0.0"]
     # },
-    python_requires='>=3.6', # tensorflow is now supported by python 3.8
+    python_requires='>=3.9', # tensorflow is now supported by python 3.8
     zip_safe=False 
 )
 

@@ -60,7 +60,8 @@ def compute_fluorescence_info( input_folder ):
                                     total = N_img ) )
             # print(data_list)
         for row in data_list:
-            df = df.append(row, ignore_index=True)
+            df = pd.concat([df, row], ignore_index=True)  
+            # df = df.append(row, ignore_index=True)
 
  
     except ValueError:
@@ -76,9 +77,9 @@ def compute_fluorescence_info( input_folder ):
             # load input image and mask
             path_to_mask = os.path.join(input_folder,f_ma)
             path_to_file = os.path.join(input_folder,f_in)
-            mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+            mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
             image = imread(path_to_file)
-            image = np.stack([ img[prop['slice']].astype(np.float) for img in image ])
+            image = np.stack([ img[prop['slice']].astype(float) for img in image ])
 
             # make sure the input image is a 3D numpy array even if it has only one channel
             if image.ndim == 2:
@@ -89,8 +90,9 @@ def compute_fluorescence_info( input_folder ):
             # compute all fluorescenc eproperties
             row = computefluorescence.compute_fluorescence_info(image, mask, f_in, f_ma, prop)
             
-            # concatenate  
-            df = df.append(row, ignore_index=True)
+            # concatenate
+            df = pd.concat([df, row], ignore_index=True)  
+            # df = df.append(row, ignore_index=True)
             
     return df
 

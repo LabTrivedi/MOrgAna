@@ -38,7 +38,7 @@ def compute_straight_morphological_info( mask, f_in, f_ma, down_shape, prop,
     if mask is None:
         # load mask
         path_to_mask = os.path.join(parent_folder,f_ma)
-        mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+        mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
     
     # compute meshgrid if not computed in the previous step already
     tangent = prop['tangent']
@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
     # load mask
     path_to_mask = os.path.join(input_folder,f_ma)
-    mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(np.float) )
+    mask = img_as_bool( imread(path_to_mask)[prop['slice']].astype(float) )
 
     # compute meshgrid if not computed in the previous step already
     tangent = prop['tangent']
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     width = prop['meshgrid_width']
     mesh = prop['meshgrid']
     if mesh == None:
-        mesh = ImageTools.morphology.meshgrid.compute_meshgrid(
+        mesh = meshgrid.compute_meshgrid(
                                                                     midline,
                                                                     tangent,
                                                                     width
@@ -133,5 +133,5 @@ if __name__ == '__main__':
     dict_['input_file'] = os.path.split(f_in)[1]
     dict_['mask_file'] = os.path.join('result_segmentation', os.path.split(f_ma)[1] )
     print(np.max(ma_straight.astype(float)))
-    dict_['locoefa_coeff'] = ImageTools.locoefa.computecoeff.compute_LOCOEFA_Lcoeff(ma_straight, down_shape[i]).locoefa_coeff.values
+    dict_['locoefa_coeff'] = computecoeff.compute_LOCOEFA_Lcoeff(ma_straight, down_shape[i]).locoefa_coeff.values
 

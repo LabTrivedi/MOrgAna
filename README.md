@@ -19,7 +19,7 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-The MOrgAna software has been tested with Python 3.6 and above. To install Python, we recommend using the software [Anaconda](https://www.anaconda.com/products/individual). Anaconda provides a Python distribution for Windows, Linux, and MacOS, and contains most of the pacakges used by MOrgAna. 
+The MOrgAna software has been tested with Python 3.9 and above. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
 
 ### Environment setup
 
@@ -36,7 +36,9 @@ To install pip version of MOrgAna, run `pip install morgana` in terminal (MacOS)
 
 ### Optional
 
-To use deep machine learning in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
+To use GPU-acceleration in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
+
+NOTE: on Windows, tensorflow>2.10 does not have GPU support unless run through WSL. We have not tested tensorflow gpu in native Windows.
 
 ## Using the software
 
