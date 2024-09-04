@@ -23,17 +23,17 @@ The MOrgAna software has been tested with Python 3.9 and above. To install Pytho
 
 ### Environment setup
 
-Users can choose to create a Conda environment using the `environment_morgana.yml` file found in the repository:`morgana/environment_morgana.yml`. To create the environment and activate it, set working directory in the MOrgAna folder and run the command `conda env create -f environment_morgana.yml` in terminal (MacOS) or command prompt(windows). If problems were encountered due to package incompatibility, we recommend the use of conda or pip to perform an update of the python package.
+<!-- Users can choose to create a Conda environment using the `environment_morgana.yml` file found in the repository:`morgana/environment_morgana.yml`. To create the environment and activate it, set working directory in the MOrgAna folder and run the command `conda env create -f environment_morgana.yml` in terminal (MacOS) or command prompt(windows). If problems were encountered due to package incompatibility, we recommend the use of conda or pip to perform an update of the python package. -->
 
-Alternatively, users can create a fresh environment with `conda create -n morgana python=3.9`.
+Users can create a fresh environment with `conda create -n morgana python=3.10 pip`.
 
 ### Installation
 
-Download the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py`), and run `python install .`.
+Download the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py`), and run `pip install .`.
 
-#### Alternative:
-To install pip version of MOrgAna, run `pip install morgana` in terminal (MacOS) or command prompt(windows).
-
+<!--  #### Alternative:
+To install pip version of MOrgAna, run `pip install morgana` in terminal (MacOS) or command prompt(windows). -->
+ 
 ### Optional
 
 To use GPU-acceleration in generation of masks, please first install TensorFlow 2 with GPU support. The tensorflow package can be installed with the command `pip install tensorflow` in terminal (MacOS) or command prompt(windows). Otherwise, please follow the official instructions for installation of tensorflow [here](https://www.tensorflow.org/install).
