@@ -60,7 +60,7 @@ def compute_fluorescence_info( input_folder ):
                                     total = N_img ) )
             # print(data_list)
         for row in data_list:
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True)
             # df = df.append(row, ignore_index=True)
 
  
@@ -91,7 +91,7 @@ def compute_fluorescence_info( input_folder ):
             row = computefluorescence.compute_fluorescence_info(image, mask, f_in, f_ma, prop)
             
             # concatenate
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True)
             # df = df.append(row, ignore_index=True)
             
     return df

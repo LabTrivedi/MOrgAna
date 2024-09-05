@@ -56,7 +56,7 @@ def compute_straight_morphological_info(input_folder, compute_locoefa = True,):
                                     total = N_img ) )
             # print(data_list)
         for row in data_list:
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True) 
             # df = df.append(row, ignore_index=True)
 
     except ValueError:
@@ -75,7 +75,7 @@ def compute_straight_morphological_info(input_folder, compute_locoefa = True,):
             row = computestraightmorphology.compute_straight_morphological_info(mask, f_in, f_ma, down_shape[i], prop, compute_locoefa=compute_locoefa)
             
             # concatenate  
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True)  
             # df = df.append(row, ignore_index=True)
 
     return df

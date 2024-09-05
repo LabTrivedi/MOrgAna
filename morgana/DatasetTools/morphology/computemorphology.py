@@ -48,7 +48,7 @@ def compute_morphological_info(input_folder, compute_meshgrid=False, compute_loc
 
         # print(data_list)
         for row in data_list:
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True)
             # df = df.append(row, ignore_index=True)
 
     except ValueError:
@@ -62,7 +62,7 @@ def compute_morphological_info(input_folder, compute_meshgrid=False, compute_loc
             row = computemorphology.compute_morphological_info(mask, f_in, f_ma, down_shape[i], compute_meshgrid, compute_locoefa=compute_locoefa)
             
             # concatenate  
-            df = pd.concat([df, row], ignore_index=True)  
+            df = pd.concat([df, row.to_frame().T], axis=0, ignore_index=True)
             # df = df.append(row, ignore_index=True)
 
     return df
