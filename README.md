@@ -19,7 +19,7 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-The MOrgAna software has been tested with Python 3.9 and above. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
+The MOrgAna software has been tested with Python 3.7, 3.8, 3.9. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
 
 ### Environment setup
 
