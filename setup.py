@@ -36,11 +36,12 @@ setuptools.setup(
         "scikit-learn>=0.24",
         "scipy>=1.6",
         "tqdm>=4.60",
+        "openpyxl",
     ],
     # extras_require = {
     #     'all':  ["tensorflow-gpu>=2.0.0"]
     # },
-    python_requires='>=3.9', # tensorflow is now supported by python 3.8
+    python_requires='<=3.9', # tensorflow is now supported by python 3.8
     zip_safe=False 
 )
 
