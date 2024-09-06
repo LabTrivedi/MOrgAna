@@ -148,9 +148,6 @@ def generate_composite_movie_cropped(input_folder):
         center = [int((_slice[0].stop+_slice[0].start)/2),
                   int((_slice[1].stop+_slice[1].start)/2)]
 
-        _slice_large = [slice(int((center[0]-max_dim[0]/2)),int((center[0]+max_dim[0]/2)),None),
-                        slice(int((center[1]-max_dim[1]/2)),int((center[1]+max_dim[1]/2)),None)]
-
         # pad the image if the largest mask doesn't fit
         if int((center[0]-max_dim[0]/2))<0:
             w = np.abs(int((center[0]-max_dim[0]/2)))
@@ -170,8 +167,7 @@ def generate_composite_movie_cropped(input_folder):
         _slice_large = [slice(int((center[0]-max_dim[0]/2)),int((center[0]+max_dim[0]/2)),None),
                         slice(int((center[1]-max_dim[1]/2)),int((center[1]+max_dim[1]/2)),None)]
 
-
-        img = np.stack([ a[_slice_large] for a in imgs ])
+        img = np.stack([ a[_slice_large[0], _slice_large[1]] for a in imgs ])
         
         movie[i,0,...] = img
 

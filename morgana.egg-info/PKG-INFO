@@ -8,7 +8,7 @@ Author-email: gritti@embl.es
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.9
+Requires-Python: <3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: tensorflow>=2.10
@@ -21,6 +21,7 @@ Requires-Dist: joblib>=1.0
 Requires-Dist: scikit-learn>=0.24
 Requires-Dist: scipy>=1.6
 Requires-Dist: tqdm>=4.60
+Requires-Dist: openpyxl
 
 <img align="left" width="80" height="80" src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/morgana_icon.png" alt="morgana">
 
@@ -43,7 +44,7 @@ MOrgAna accepts images acquired by diverse devices such as high content screenin
 
 ## Installation
 
-The MOrgAna software has been tested with Python 3.9 and above. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
+The MOrgAna software has been tested with Python 3.7, 3.8, 3.9. To install Python, we recommend using the  [Miniconda distribution](https://docs.anaconda.com/miniconda/). 
 
 ### Environment setup
 

@@ -8,3 +8,4 @@ joblib>=1.0
 scikit-learn>=0.24
 scipy>=1.6
 tqdm>=4.60
+openpyxl

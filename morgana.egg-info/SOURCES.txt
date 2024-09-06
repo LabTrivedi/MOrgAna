@@ -364,3 +364,4 @@ morgana/scripts/tests/testpackage/foo/__init__.py
 morgana/scripts/tests/testpackage/foo/foo.py
 morgana/scripts/tests/testpackage/foo/__pycache__/__init__.cpython-37.pyc
 morgana/scripts/tests/testpackage/foo/__pycache__/foo.cpython-37.pyc
+tests/test_morphology_overview.py
