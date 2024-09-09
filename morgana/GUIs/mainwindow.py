@@ -988,6 +988,7 @@ class morganaApp(QWidget):
                                                                       )
 
         # for every quantification parameter, make the appropriate plot
+        print(data_all)
         for key in keys:
             data_key = [data[key] for data in data_all]
             # print(data_key)

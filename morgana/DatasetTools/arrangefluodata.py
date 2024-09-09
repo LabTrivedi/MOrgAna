@@ -80,7 +80,7 @@ def collect_fluo_data(groups, channel, distType, isTimelapse=False):
 
             if isTimelapse:
                 # if this is a timelapse dataset, all data should be stored in the same object
-                rows = pd.Series({ key: list(data[key].values) for key in keys })
+                rows = pd.Series({ key: list(data[key].values) for key in keys }).to_frame().T
             else:
                 rows = data
 

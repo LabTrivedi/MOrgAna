@@ -1,17 +1,56 @@
 import os
-import pandas as pd
+from morgana.DatasetTools.morphology import overview as overviewDT
 
-if __name__ == '__main__':
-    import sys
-    sys.path.append(os.path.join('..'))
+if __name__=="__main__":
 
-from morgana.DatasetTools.morphology import computemorphology
-from morgana.DatasetTools.morphology import io as ioMorph
-from morgana.DatasetTools.straightmorphology import computestraightmorphology
-from morgana.DatasetTools.straightmorphology import io as ioStraightMorph
+    input_folder = "V:/Lilli_Hahn/data/EH23H_signaling-perturbation/EH24H_DIF01/MOrgAna/images/Control_CHIR/24h"
 
-def collect_morpho_data(groups, morpho_params, computeMorpho, maskType, isTimelapse=False):
+    """
+    overviewDT.createCompositeOverview(input_folder)
+    """
+    import numpy as np
+    import os, tqdm
+    from skimage.io import imread, imsave
+    from skimage import img_as_bool
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+    from matplotlib.colors import LinearSegmentedColormap
+    from textwrap import wrap
+    from matplotlib import rc
+    rc('font', size=17)
+    rc('font', family='Arial')
+    # rc('font', serif='Times')
+    rc('pdf', fonttype=42)
+    # rc('text', usetex=True)
+    from itertools import repeat
+    import multiprocessing
 
+    from morgana.DatasetTools import io
+    from morgana.DatasetTools.morphology import computemorphology
+    from morgana.DatasetTools.morphology import io as ioMorph
+    from morgana.ImageTools import compositeImageJ
+    from morgana.ImageTools.morphology import meshgrid
+    from morgana.DatasetTools.morphology import computemorphology
+    from morgana.DatasetTools.morphology import io as ioMorph
+    from morgana.DatasetTools.straightmorphology import computestraightmorphology
+    from morgana.DatasetTools.straightmorphology import io as ioStraightMorph
+
+
+    print('### Generating recap composite movie at',input_folder)
+        
+    
+    _, cond = os.path.split(input_folder)
+    segment_folder = os.path.join(input_folder,'result_segmentation')
+    
+    file_extension = '_morpho_params.json'
+    fname = os.path.join(segment_folder,cond+file_extension)
+
+    props = ioMorph.load_morpho_params(segment_folder, cond)
+
+    flist_in = [ os.path.join(input_folder, i) for i in props['input_file'] ] 
+    # flist_mask = [ os.path.join(input_folder, i) for i in props['mask_file'] ]
+
+    maskType = "Unprocessed"    
     if maskType == "Unprocessed":
         compute_morphological_info = computemorphology.compute_morphological_info
         save_morphological_info = ioMorph.save_morpho_params
@@ -83,34 +122,10 @@ def collect_morpho_data(groups, morpho_params, computeMorpho, maskType, isTimela
 
             if isTimelapse:
                 # if this is a timelapse dataset, all data should be stored in the same object
-                rows = pd.Series({ key: list(data[key].values) for key in morpho_params }).to_frame().T
+                rows = pd.Series({ key: list(data[key].values) for key in morpho_params })
             else:
                 rows = data
 
             # concatenate to existing dataframe
             data_all[i] = pd.concat([data_all[i], rows], ignore_index=True)  
             # data_all[i] = data_all[i].append(rows, ignore_index=True)
-
-    return data_all, morpho_params
-    
-if __name__ == '__main__':
-    folders = [['C:\\Users\\nicol\\Documents\\Repos\\gastrSegment_testData\\2020-02-20_David_TL\\g03G']]
-    morpho_params = [
-                        'area',
-                        'eccentricity',
-                        'major_axis_length',
-                        'minor_axis_length',
-                        'equivalent_diameter',
-                        'perimeter',
-                        'euler_number',
-                        'extent',
-                        'orientation',
-                        'elliptical_fourier_transform'
-                        ]
-    computeMorpho = [True for i in morpho_params]
-    maskType = ['Unprocessed']
-    isTimelapse = False
-
-    data, _ = collect_morpho_data(folders, morpho_params, computeMorpho, maskType, isTimelapse)
-    print(data)
-    # print(data[0]['ch%d_%s'%(channel,distributionType)].values[0])
