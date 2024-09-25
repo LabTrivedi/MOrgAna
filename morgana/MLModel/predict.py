@@ -162,7 +162,7 @@ def make_watershed( mask, edge,
     markers[weighted_cm[0],weighted_cm[1]] = 2
 
     # perform watershed
-    labels = segmentation.watershed(edge, markers)
+    labels = segmentation.watershed(edge, markers.astype(np.uint))
     labels =(labels-np.min(labels))/(np.max(labels)-np.min(labels))
     labels = transform.resize(labels, original_shape, order=0, preserve_range=False).astype(np.uint8)
 

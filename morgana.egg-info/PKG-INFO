@@ -50,11 +50,11 @@ The MOrgAna software has been tested with Python 3.7, 3.8, 3.9. To install Pytho
 
 <!-- Users can choose to create a Conda environment using the `environment_morgana.yml` file found in the repository:`morgana/environment_morgana.yml`. To create the environment and activate it, set working directory in the MOrgAna folder and run the command `conda env create -f environment_morgana.yml` in terminal (MacOS) or command prompt(windows). If problems were encountered due to package incompatibility, we recommend the use of conda or pip to perform an update of the python package. -->
 
-Users can create a fresh environment with `conda create -n morgana python=3.10 pip`.
+Users can create a fresh environment with `conda create -n morgana python=3.9 pip`.
 
 ### Installation
 
-Download the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py`), and run `pip install .`.
+Download or clone the current repository, activate the `morgana` environment, move into the folder `MOrgAna` (i.e., the one containing the file `setup.py`), and run `pip install .`.
 
 <!--  #### Alternative:
 To install pip version of MOrgAna, run `pip install morgana` in terminal (MacOS) or command prompt(windows). -->

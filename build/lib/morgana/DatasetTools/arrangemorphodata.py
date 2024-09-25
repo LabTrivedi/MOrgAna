@@ -83,7 +83,7 @@ def collect_morpho_data(groups, morpho_params, computeMorpho, maskType, isTimela
 
             if isTimelapse:
                 # if this is a timelapse dataset, all data should be stored in the same object
-                rows = pd.Series({ key: list(data[key].values) for key in morpho_params })
+                rows = pd.Series({ key: list(data[key].values) for key in morpho_params }).to_frame().T
             else:
                 rows = data
 

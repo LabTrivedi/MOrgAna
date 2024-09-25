@@ -30,7 +30,7 @@ setuptools.setup(
         "matplotlib",
         "numpy>=1.20",
         "pyqt5",
-        "scikit-image==0.18",
+        "scikit-image>=0.18",
         "pandas>=1.2",
         "joblib>=1.0",
         "scikit-learn>=0.24",
