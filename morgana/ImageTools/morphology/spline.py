@@ -24,7 +24,9 @@ def compute_spline_coeff(ma, bf, anch, visualize=False):
     k = 3
     if anch.shape[0]<=4:
         k = 2
-    tck,_ = interpolate.splprep([anch[:,0],  anch[:,1]], k=k, s=k*500000)
+    weights = np.ones(len(anch[:,0]))
+    weights[[0,-1]] = 100000000. # force to pass through the first and last anchor
+    tck,_ = interpolate.splprep([anch[:,0],  anch[:,1]], w=weights, k=k, s=k*1000)
 
     l = []
     Ns = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,50,75,100]

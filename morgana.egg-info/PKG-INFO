@@ -15,7 +15,7 @@ Requires-Dist: tensorflow>=2.10
 Requires-Dist: matplotlib
 Requires-Dist: numpy>=1.20
 Requires-Dist: pyqt5
-Requires-Dist: scikit-image==0.18
+Requires-Dist: scikit-image>=0.18
 Requires-Dist: pandas>=1.2
 Requires-Dist: joblib>=1.0
 Requires-Dist: scikit-learn>=0.24
