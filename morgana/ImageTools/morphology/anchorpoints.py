@@ -122,7 +122,7 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
     n = np.clip(5,0,anchors.shape[0])
     for i in range(1,n):
         tg += (anchors[0]-anchors[i])/np.sqrt(np.sum((anchors[0]-anchors[i])**2))
-    tg = tg/5
+    tg = tg/n
     tg = tg/np.sqrt(np.sum(tg**2))
     edge_point_L = anchors[0]
     # print(anchors)
@@ -134,7 +134,7 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
     tg = np.array([0,0]).astype(float)
     for i in range(1,n):
         tg += (anchors[::-1][0]-anchors[::-1][i])/(np.sqrt(np.sum((anchors[::-1][0]-anchors[::-1][i])**2)))
-    tg = tg/5
+    tg = tg/n
     tg = tg/np.sqrt(np.sum(tg**2))
     edge_point_R = anchors[-1]
     while ma[int(edge_point_R[0]),int(edge_point_R[1])]:
