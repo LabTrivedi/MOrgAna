@@ -21,7 +21,12 @@ def compute_anchor_points(ma,_slice,down_shape,smoothing=1000):
     ma[:,0] = 0
 
     ### resize image to make faster computation
-    ma_down = transform.resize(ma.astype(float), (int(ma.shape[0]*down_shape),int(ma.shape[1]*down_shape)), order=0, preserve_range=True)
+    ma_down = transform.resize(
+        ma, 
+        (int(ma.shape[0]*down_shape),int(ma.shape[1]*down_shape)), 
+        order=0, 
+        preserve_range=True
+        )
     ma_down[-1,:] = 0
     ma_down[0,:] = 0
     ma_down[:,-1] = 0
