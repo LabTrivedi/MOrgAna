@@ -124,8 +124,9 @@ class morganaApp(QWidget):
         self.modelFolderSpace = QLineEdit(); self.modelFolderSpace.setText(self.modelFolder)
         self.modelFolderSpace.setReadOnly(True)
         self.modelFolderSpace.setStyleSheet('color:gray;')
-        self.deepModel = QCheckBox("Use Multi Layer Perceptrons")
-        self.deepModel.setChecked(False)
+        self.modelType = QComboBox()
+        self.modelType.addItems(['Logistic regression','Multi Layer Perceptrons','U-Net'])
+        self.modelType.setCurrentIndex(0)
 
         self.showMoreButton = QPushButton("Show/Hide params")
         self.showMoreButton.setFocusPolicy(Qt.NoFocus)
@@ -193,7 +194,8 @@ class morganaApp(QWidget):
         layout.addWidget(selectModel,               1,0,1,2)
         layout.addWidget(QLabel('Model folder:'),   2,0,1,1)
         layout.addWidget(self.modelFolderSpace,     2,1,1,1)
-        layout.addWidget(self.deepModel,            3,0,1,1)
+        layout.addWidget(QLabel('Model type:'),     3,0,1,1)
+        layout.addWidget(self.modelType,            3,1,1,1)
 
         layout.addWidget(self.showMoreButton,       4,0,1,1)
         layout.addWidget(self.trainButton,          4,1,1,1)
@@ -275,6 +277,12 @@ class morganaApp(QWidget):
             self.featuresLabel.show()
             self.feature_modeSpace.show()
             self.showMoreModel = True
+
+    def isDeep(self):
+        return self.modelType.currentText() == 'Multi Layer Perceptrons'
+
+    def isUnet(self):
+        return self.modelType.currentText() == 'U-Net'
 
     def selectModelFolder(self):
         self.modelFolder = QFileDialog.getExistingDirectory(self, "Select Input Folder of Model")
@@ -387,6 +395,29 @@ class morganaApp(QWidget):
         # compute features and generate training set and weights
         #############################################
 
+        if self.isUnet():
+            # the U-Net learns from whole images: no pixel features and no scaler
+            print('##### Training model...')
+            start = time.time()
+            self.classifier = train.train_unet( img_train,
+                                                [g.astype(np.uint8) for g in gt_train],
+                                                down_shape=self.params['down_shape'],
+                                                edge_size=self.params['edge_size'] )
+            self.scaler = None
+            print('Models trained in %.3f seconds.'%(time.time()-start))
+            ioML.save_model( self.modelFolder,
+                                    self.classifier,
+                                    self.scaler,
+                                    sigmas=self.params['sigmas'],
+                                    down_shape=self.params['down_shape'],
+                                    edge_size=self.params['edge_size'],
+                                    fraction=self.params['fraction'],
+                                    feature_mode=self.params['feature_mode'],
+                                    bias=self.params['bias'], unet=True )
+            print('##### Model saved!')
+            self.predictButton.setEnabled(True)
+            return
+
         print('##### Generating training set...')
         X, Y, w, self.scaler = train.generate_training_set( img_train, 
                                                 [g.astype(np.uint8) for g in gt_train], 
@@ -403,7 +434,7 @@ class morganaApp(QWidget):
 
         print('##### Training model...')
         start = time.time()
-        self.classifier = train.train_classifier( X, Y, w, deep=self.deepModel.isChecked(), hidden=(350, 50) )
+        self.classifier = train.train_classifier( X, Y, w, deep=self.isDeep(), hidden=(350, 50) )
         print('Models trained in %.3f seconds.'%(time.time()-start))
         # print('classes_: ', self.classifier.classes_)
         # print('coef_: ', self.classifier.coef_)
@@ -420,7 +451,7 @@ class morganaApp(QWidget):
                                 edge_size=self.params['edge_size'],
                                 fraction=self.params['fraction'],
                                 feature_mode=self.params['feature_mode'],
-                                bias=self.params['bias'], deep=self.deepModel.isChecked() )
+                                bias=self.params['bias'], deep=self.isDeep() )
         print('##### Model saved!')
         self.predictButton.setEnabled(True)
 
@@ -429,7 +460,7 @@ class morganaApp(QWidget):
         # load parameters and classifier
         #############################################
         print('##### Loading classifier model and parameters...')
-        self.classifier, self.scaler, self.params = ioML.load_model( self.modelFolder, deep=self.deepModel.isChecked() )
+        self.classifier, self.scaler, self.params = ioML.load_model( self.modelFolder, deep=self.isDeep(), unet=self.isUnet() )
         if self.classifier is None:
             QMessageBox.warning(self,'Warning!','Could not find any model')
         else:
@@ -471,13 +502,18 @@ class morganaApp(QWidget):
             img = img[0]
 
             print('Predicting image...')
-            pred, prob = predict.predict_image( img,
-                                self.classifier,
-                                self.scaler,
-                                sigmas=self.params['sigmas'],
-                                new_shape_scale=self.params['down_shape'],
-                                feature_mode=self.params['feature_mode'],
-                                deep=self.deepModel.isChecked() )
+            if self.isUnet():
+                pred, prob = predict.predict_image_unet( img,
+                                    self.classifier,
+                                    new_shape_scale=self.params['down_shape'] )
+            else:
+                pred, prob = predict.predict_image( img,
+                                    self.classifier,
+                                    self.scaler,
+                                    sigmas=self.params['sigmas'],
+                                    new_shape_scale=self.params['down_shape'],
+                                    feature_mode=self.params['feature_mode'],
+                                    deep=self.isDeep() )
 
             # remove objects at the border
             negative = ndi.binary_fill_holes(pred==0)

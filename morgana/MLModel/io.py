@@ -7,10 +7,13 @@ def save_model( model_folder, classifier, scaler,
                 fraction=0.1,
                 bias=-1,
                 feature_mode='ilastik',
-                deep=False ):
-    '''
+                deep=False,
+                unet=False ):
+    r'''
     save a previously generated machine learning model in the "model_folder" input path:
     * model_folder\classifier.pkl: logistic classifier model
+    * model_folder\classifier.keras: MLP model (deep=True)
+    * model_folder\unet.keras: U-Net model (unet=True)
     * model_folder\scaler.pkl: scaler used to normalize the trainingset
     * model_folder\params.json: parameters used for training
 
@@ -22,11 +25,14 @@ def save_model( model_folder, classifier, scaler,
     except NameError:
         to_unicode = str
 
-    if not deep:
+    if unet:
+        classifier.save(os.path.join(model_folder, "unet.keras"))
+    elif not deep:
         joblib.dump(classifier, os.path.join(model_folder,'classifier.pkl'))
     else:
         classifier.save(os.path.join(model_folder, "classifier.keras"))
     
+    # the U-Net has no scaler (scaler=None), the file is still saved to mark the model as trained
     joblib.dump(scaler, os.path.join(model_folder,'scaler.pkl'))
     
     params = {  'sigmas': sigmas,
@@ -41,15 +47,23 @@ def save_model( model_folder, classifier, scaler,
                     separators=(',', ': '), ensure_ascii=False)
         f.write(to_unicode(str_))
 
-def load_model( model_folder, deep=False ):
-    '''
+def load_model( model_folder, deep=False, unet=False ):
+    r'''
     load a previously saved machine learning model from the "model_folder" input path:
     * model_folder\classifier.pkl: logistic classifier model
-    * model_folder\scaler.pkl: scaler used to normalize the trainingset
+    * model_folder\classifier.keras: MLP model (deep=True)
+    * model_folder\unet.keras: U-Net model (unet=True)
+    * model_folder\scaler.pkl: scaler used to normalize the trainingset (None for the U-Net)
     * model_folder\params.json: parameters used for training
 
     '''
-    if not deep:
+    if unet:
+        from tensorflow import keras
+        try:
+            classifier = keras.models.load_model(os.path.join(model_folder, "unet.keras"))
+        except:
+            return None, None, None
+    elif not deep:
         try:
             classifier = joblib.load(os.path.join(model_folder,'classifier.pkl'))
         except:

@@ -65,7 +65,7 @@ Each tif file in image folder should contain only one organoid with the brightfi
 <img src="https://raw.githubusercontent.com/LabTrivedi/MOrgAna/master/morgana/Examples/app_screenshots/binary_mask.png" alt="binary_mask" width="400"/>
 </p>
 
-3. Select `Use Multi Layer Perceptrons` if Tensorflow and CUDA have been successfully installed and if you would like to use deep learning to generate additional binary masks. 
+3. Choose the `Model type`: `Logistic regression` (default), `Multi Layer Perceptrons` or `U-Net`. The last two need Tensorflow (and preferably CUDA). The U-Net learns from whole images instead of pixel features, so it only uses the `Downscaling` and `Edge size` parameters. 
 
 Users can choose to adjust the following parameters of the model by clicking `Show/Hide params`
 
@@ -76,7 +76,7 @@ Users can choose to adjust the following parameters of the model by clicking `Sh
 * Extraction bias: percentage of pixels extracted from the bright region of the mask. This parameter is useful when inputted gastruloids are particularly small and there is a huge bias in extracting background pixels.
 * Features: 'ilastik' or 'daisy'. In addition to the ilastik features (gaussian blur, laplacian of gaussian, difference of gaussian and gradient), daisy will compute many texture features from the inptu image. This gives more features to train on, but will slow down the training and prediction of new masks.
 
-4. Once done, hit the `Train model` button. This may take some time :coffee:. Once completed, the message `##### Model saved!` will be seen on the terminal(MacOS) or command prompt(windows). If a model has previously been generated, select the model folder and the user can skip step 3 & 4 and jump to step 5. For models trained with Multi Layer Perceptrons, tick the option before selection of model folder.
+4. Once done, hit the `Train model` button. This may take some time :coffee:. Once completed, the message `##### Model saved!` will be seen on the terminal(MacOS) or command prompt(windows). If a model has previously been generated, select the model folder and the user can skip step 3 & 4 and jump to step 5. For models trained with Multi Layer Perceptrons or U-Net, choose the matching `Model type` before selection of model folder.
 
 5. To generate binary masks of new images, select the folder containing images in `Specify image folder` and click `Generate masks`. Once completed, the message `All images done!` will be displayed on the terminal(MacOS) or command prompt(windows). If you would like an overview of all masks generated, click on `Save overview image of masks` and save the pop-up image.
 

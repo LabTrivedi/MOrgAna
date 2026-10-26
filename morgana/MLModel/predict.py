@@ -6,6 +6,7 @@ from skimage.io import imread, imsave
 import scipy.ndimage as ndi
 
 from morgana.ImageTools import processfeatures
+from morgana.MLModel.train import normalize_image
 
 def create_features(_input, scaler,
                     gt=np.array([]),
@@ -119,6 +120,37 @@ def predict_image(  _input, classifier, scaler,
 
     return y_pred.astype(np.uint8), y_prob
 
+def predict_image_unet( _input, model,
+                    new_shape_scale=-1 ):
+    '''
+    Same outputs as predict_image: y_pred (x,y) with classes 0 background, 1 inside, 2 edge,
+    and y_prob (n_classes,x,y).
+
+    '''
+    original_shape = _input.shape
+
+    _input = normalize_image(_input)
+    if new_shape_scale != -1:
+        shape = (int(_input.shape[0]*new_shape_scale), int(_input.shape[1]*new_shape_scale))
+        _input = transform.resize(_input, shape, preserve_range=True)
+    shape = _input.shape
+
+    # pad to a multiple of the total downsampling of the U-Net
+    n_pool = len([l for l in model.layers if 'max_pooling' in l.name])
+    pad = [(0, (-s) % 2**n_pool) for s in shape]
+    _input = np.pad(_input, pad, mode='reflect')
+
+    y_prob = model.predict(_input[np.newaxis,...,np.newaxis], verbose=0)[0]
+    y_prob = y_prob[:shape[0],:shape[1]]
+    y_prob = np.moveaxis(y_prob, -1, 0)
+    n_classes = y_prob.shape[0]
+
+    # resize to original shape
+    y_prob = transform.resize(y_prob, (n_classes, *original_shape), order=0, preserve_range=True)
+    y_pred = y_prob.argmax(axis=0)
+
+    return y_pred.astype(np.uint8), y_prob
+
 def make_watershed( mask, edge,
                     new_shape_scale=-1 ):
 
@@ -168,7 +200,7 @@ def make_watershed( mask, edge,
 
     return labels
 
-def predict_image_from_file(f_in, classifier, scaler, params, deep=False):
+def predict_image_from_file(f_in, classifier, scaler, params, deep=False, unet=False):
 
     parent, filename = os.path.split(f_in)
     filename, file_extension = os.path.splitext(filename)
@@ -194,15 +226,22 @@ def predict_image_from_file(f_in, classifier, scaler, params, deep=False):
     if not os.path.exists(new_name_classifier):
         # print('Predicting image...')
 
-        pred, prob = predict_image( 
-                            img,
-                            classifier,
-                            scaler,
-                            sigmas = params['sigmas'],
-                            new_shape_scale = params['down_shape'],
-                            feature_mode = params['feature_mode'],
-                            deep=deep
-                            )
+        if unet:
+            pred, prob = predict_image_unet(
+                                img,
+                                classifier,
+                                new_shape_scale = params['down_shape']
+                                )
+        else:
+            pred, prob = predict_image( 
+                                img,
+                                classifier,
+                                scaler,
+                                sigmas = params['sigmas'],
+                                new_shape_scale = params['down_shape'],
+                                feature_mode = params['feature_mode'],
+                                deep=deep
+                                )
     
         # remove objects at the border
         negative = ndi.binary_fill_holes(pred==0)
