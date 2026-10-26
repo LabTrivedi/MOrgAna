@@ -104,7 +104,8 @@ def train_classifier( X, Y, w, deep=False, epochs=50, n_classes = 3, hidden=(350
     # train the classifier
     if not deep:
         print('Training of Logistic Regression classifier...')
-        classifier = linear_model.LogisticRegression(solver='lbfgs', multi_class='auto')
+        # multi_class was removed in scikit-learn 1.8, multinomial is the default for lbfgs
+        classifier = linear_model.LogisticRegression(solver='lbfgs')
         classifier.fit(X, Y, sample_weight=w)
     else:
         print('Training of MLP classifier...')
